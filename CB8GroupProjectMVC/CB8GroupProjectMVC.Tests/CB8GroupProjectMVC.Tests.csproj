@@ -98,12 +98,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CB8GroupProjectMVC\CB8GroupProjectMVC.csproj">
-      <Project>{3148D4F3-21DA-43EF-AF7D-51CF984EFF25}</Project>
-      <Name>CB8GroupProjectMVC</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
