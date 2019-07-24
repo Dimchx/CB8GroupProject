@@ -2,9 +2,9 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Sticky footer styles
@@ -53,4 +53,35 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.card.mb-3 {
+    background-color: rgba(0,0,0,0.10);
+}
+
+.navbar-dark .navbar-brand {
+    color: #61dafb;
+    font-size: x-large;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color: white;
+}
+
+.navbar-dark .navbar-nav .nav-link.premium{
+    color: gold;
+}
+
+.card {
+    width: 20%;
+    color: black;
+    
+}
+
+.list-group-item {
+    background-color:rgba(0,0,0,0.10);
+}
+
+.btn-secondary {
+    background-color: #61dafb;
 }
