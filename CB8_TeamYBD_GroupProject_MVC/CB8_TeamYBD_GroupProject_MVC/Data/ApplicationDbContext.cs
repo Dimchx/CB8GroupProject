@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using CB8_TeamYBD_GroupProject_MVC.Models;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Data
 {
@@ -12,5 +13,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Data
             : base(options)
         {
         }
+        public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.Article> Article { get; set; }
+        
     }
 }
