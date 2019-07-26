@@ -8,6 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Data;
 using CB8_TeamYBD_GroupProject_MVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using CB8_TeamYBD_GroupProject_MVC.Managers;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI;
+using System.Security.Claims;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -15,16 +20,18 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        private ArticlesDBManager _manager;
         public ArticlesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: Articles
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Article.ToListAsync());
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return View(await _manager.MyArticlesAsync(userId));
         }
 
         // GET: Articles/Details/5
