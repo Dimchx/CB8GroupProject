@@ -57,7 +57,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,Paid")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,Author,Content,Paid")] Article article)
         {
             if (ModelState.IsValid)
             {
