@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Data;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -52,6 +53,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         // POST: Articles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Content,Paid")] Article article)
