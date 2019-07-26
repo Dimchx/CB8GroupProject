@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Data;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
+    [Authorize]
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
