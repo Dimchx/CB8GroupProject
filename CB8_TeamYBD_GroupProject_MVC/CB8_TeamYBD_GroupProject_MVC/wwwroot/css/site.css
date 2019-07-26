@@ -1,11 +1,16 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+body {
+    overflow: hidden;
+}
 
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
 }
+
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -59,6 +64,8 @@ html {
 .navbar-dark .navbar-brand {
     color: #61dafb;
     font-size: x-large;
+    min-width: 110.15px;
+
 }
 
 .navbar-dark .navbar-nav .nav-link{
@@ -72,7 +79,8 @@ html {
 .card {
     width: 20%;
     color: black;
-    height: 100vh;
+    height: calc(100vh - 96px - 60px);
+    min-width: 262.8px;
 }
 
 .list-group-item {
@@ -81,7 +89,14 @@ html {
 
 .btn-secondary {
     background-color: #61dafb;
+    height: 45px;
 }
+
+.tox-tinymce{
+    min-height: 390px;
+    max-height: 390px;
+}
+
 
 
 

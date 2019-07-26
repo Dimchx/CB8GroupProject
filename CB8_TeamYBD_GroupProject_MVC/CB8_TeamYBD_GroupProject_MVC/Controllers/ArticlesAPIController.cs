@@ -12,11 +12,11 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ArticlesController : ControllerBase
+    public class ArticlesAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public ArticlesController(ApplicationDbContext context)
+        public ArticlesAPIController(ApplicationDbContext context)
         {
             _context = context;
         }
