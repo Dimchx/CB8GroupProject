@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -15,8 +16,10 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             return View();
         }
 
+        
         public IActionResult SeeArticle()
         {
+
             return View();
         }
 
