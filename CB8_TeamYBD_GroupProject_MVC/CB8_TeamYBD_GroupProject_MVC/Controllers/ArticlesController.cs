@@ -20,7 +20,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private ArticlesDBManager _manager;
         public ArticlesController(ApplicationDbContext context)
         {
             _context = context;

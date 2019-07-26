@@ -1,9 +1,9 @@
-﻿
+﻿@model  CB8_TeamYBD_GroupProject_MVC.Models.Article
+
 @{
-    ViewData["Title"] = "SeeArticle";
+    ViewData["Title"] = "See Article";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.Raw(@Model.Content)
 
-@
-<h1>SeeArticle</h1>
 

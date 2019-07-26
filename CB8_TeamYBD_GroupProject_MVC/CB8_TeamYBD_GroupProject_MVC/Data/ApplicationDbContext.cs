@@ -14,6 +14,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Data
         {
         }
         public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.Article> Article { get; set; }
+
         
     }
 }
