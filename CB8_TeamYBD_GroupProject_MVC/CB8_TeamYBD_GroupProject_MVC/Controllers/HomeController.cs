@@ -15,7 +15,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult SeeArticle()
         {
             return View();
         }
