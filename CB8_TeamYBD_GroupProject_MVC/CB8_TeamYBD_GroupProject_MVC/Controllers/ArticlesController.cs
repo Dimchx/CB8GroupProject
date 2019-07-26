@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
+    [Authorize]
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
