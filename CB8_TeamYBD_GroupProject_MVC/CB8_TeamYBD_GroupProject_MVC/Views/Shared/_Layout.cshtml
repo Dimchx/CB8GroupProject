@@ -53,7 +53,8 @@
                 </form>
             </div>
         </nav>
-        <div style="display: flex;">
+        <div class="sidebar" style="display: flex;">
+            <div id="sidebar-hover-area"></div>
             <div class="card mb-3">
                 <h3 class="card-header">Navigation</h3>
                 <div class="card-body">
@@ -73,12 +74,10 @@
                     2 days ago
                 </div>
                 </div>
-                <div style="flex:1 0 0">
-                    <partial name="_CookieConsentPartial" />
-                    <main role="main" class="p-3">
-                        @RenderBody()
-                    </main>
-                </div>
+                <partial name="_CookieConsentPartial" />
+                <main role="main" class="p-3" style="flex:1 0 0">
+                    @RenderBody()
+                </main>
             </div>
 
         

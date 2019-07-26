@@ -1,7 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 body {
-   
+   overflow: hidden;
 }
 
 a.navbar-brand {
@@ -77,10 +77,11 @@ html {
 }
 
 .card {
-    width: 20%;
+    width: 370px;;
     color: black;
-    height: calc(100vh - 96px - 60px);
-    min-width: 262.8px;
+    height: calc(100vh - 94px - 60px);
+    overflow: hidden;
+    transition: 0.5s;
 }
 
 .list-group-item {
@@ -95,6 +96,11 @@ html {
 .tox-tinymce{
     min-height: 390px;
     max-height: 390px;
+}
+
+.sidebar main {
+    height: calc(100vh - 94px - 60px);
+    overflow: scroll;
 }
 
 
