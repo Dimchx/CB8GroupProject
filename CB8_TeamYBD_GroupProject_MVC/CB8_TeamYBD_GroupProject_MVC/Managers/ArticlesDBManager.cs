@@ -13,10 +13,16 @@ namespace CB8_TeamYBD_GroupProject_MVC.Managers
     {
         private readonly ApplicationDbContext _context;
 
-        public async Task<List<Article>> MyArticlesAsync(string authorId)
+        public List<Article> MyArticles(string authorId)
         {
             IdentityUser author = _context.Users.Find(authorId);
-            return await _context.Article.Where(x => x.Author == author).ToListAsync();
+            switch (_context.Article.Where(x => x.Author == author).ToList())
+            {
+                case null:
+                    return new List<Article> { };
+                default:
+                    return _context.Article.Where(x => x.Author == author).ToList();
+            }
         }
     }
 }

@@ -31,7 +31,9 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return View(await _manager.MyArticlesAsync(userId));
+            var user = _context.Users.Find(userId);
+            var articles = await _context.Article.Where(x => x.Author == user).ToListAsync();
+            return View(articles);
         }
 
         // GET: Articles/Details/5
@@ -64,10 +66,13 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Author,Content,Paid")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content,Paid")] Article article)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = _context.Users.Find(userId);
+                article.Author = user;
                 _context.Add(article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
