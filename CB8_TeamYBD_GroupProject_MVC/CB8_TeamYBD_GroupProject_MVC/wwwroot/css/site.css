@@ -103,7 +103,15 @@ html {
     overflow: scroll;
 }
 
+.alert-info {
+    width: 100vw;
+    height: 50px;
+    margin-left: 15px;
+}
 
+.bg-primary {
+    background: linear-gradient(0.25turn, #000, #554e4e, #313335);
+}
 
 
 
