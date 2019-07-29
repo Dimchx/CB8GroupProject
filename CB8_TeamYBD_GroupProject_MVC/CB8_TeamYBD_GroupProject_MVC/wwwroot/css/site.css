@@ -121,3 +121,11 @@ html {
     padding-bottom: 106px;
 }
 
+#card-content {
+    width: 100%;
+    height: 100%;
+}
+
+.bg-info {
+    background: linear-gradient(#353333, #606066) !important;
+}
