@@ -113,5 +113,11 @@ html {
     background: linear-gradient(0.25turn, #000, #554e4e, #313335);
 }
 
-
+#profile-img {
+    height: 275px;
+    width: 74%;
+    display: block;
+    padding-left: 92px;
+    padding-bottom: 106px;
+}
 
