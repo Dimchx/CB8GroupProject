@@ -4,7 +4,15 @@
     ViewData["Title"] = "See Article";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 style="color:#61dafb;">@Model.Title</h1>
-@Html.Raw(@Model.Content)
+
+<div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+    <div class="card-header"><h1 style="color:#FFF;">@Model.Title</h1></div>
+    <div class="card-body">
+        <h4 class="card-title">Info card title</h4>
+        <p class="card-text">@Html.Raw(@Model.Content)</p>
+    </div>
+</div>
+
+
 
 
