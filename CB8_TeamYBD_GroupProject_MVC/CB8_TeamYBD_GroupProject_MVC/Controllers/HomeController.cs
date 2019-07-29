@@ -26,7 +26,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         }
 
         
-        public IActionResult SeeArticle(int Id)
+        public IActionResult Read(int Id)
         {
             bool purchased = false;
             var article = _context.Article.Find(Id);
