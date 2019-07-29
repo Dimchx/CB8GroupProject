@@ -124,8 +124,22 @@ html {
 #card-content {
     width: 100%;
     height: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .bg-info {
     background: linear-gradient(#353333, #606066) !important;
+}
+
+
+#like-icon {
+    bottom: 110px;
+    position: fixed;
+    
+}
+
+#like-icon:hover {
+    cursor: pointer;
+    color: #61dafb;
 }
