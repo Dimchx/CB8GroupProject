@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI;
 using System.Security.Claims;
+using CB8_TeamYBD_GroupProject_MVC.ViewModels;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -54,6 +55,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         // GET: Articles/Create
         public IActionResult Create()
         {
+
             return View();
         }
 
@@ -63,15 +65,16 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,Paid")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content,Paid")] ArticleViewModel article)
         {
+
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await _context.Users.FindAsync(userId);
+            var user = _context.Users.Find(userId);
             article.Author = user;
             if (ModelState.IsValid)
             {
-                               
-                _context.Add(article);
+
+                _context.Add((Article)article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

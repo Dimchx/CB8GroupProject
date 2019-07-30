@@ -6,13 +6,6 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="ViewModels\**" />
-    <Content Remove="ViewModels\**" />
-    <EmbeddedResource Remove="ViewModels\**" />
-    <None Remove="ViewModels\**" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="bootstrap-sass" Version="3.3.5" />
