@@ -17,7 +17,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
         [Required]
         public string Content { get; set; }
         public bool Paid { get; set; }
-        public virtual ICollection<ReedmieUser> PurchasedBy { get; set; }
-        public virtual ICollection<ReedmieUser> LikedBy { get; set; }
+        public virtual ICollection<IdentityUser> PurchasedBy { get; set; }
+        public virtual ICollection<IdentityUser> LikedBy { get; set; }
     }
 }
