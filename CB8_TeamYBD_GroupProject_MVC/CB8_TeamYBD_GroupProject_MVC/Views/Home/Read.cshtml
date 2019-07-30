@@ -16,6 +16,35 @@
     </div>
 </div>
 
-
-
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".fa-smile-wink").on("click", function (e) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/ArticleLikes/',
+                    data: {
+                        articleId: e.target.id
+                    },
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response) {
+                            e.target.classList.remove('fa-smile-wink')
+                            e.target.classList.add('fa-2x:hover')
+                        }
+                        else {
+                            e.target.classList.remove('fa-2x:hover')
+                            e.target.classList.add('fa-smile-wink')
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+}
 

@@ -46,6 +46,8 @@ namespace CB8_TeamYBD_GroupProject_MVC
                 options.Password.RequiredUniqueChars = 0;
             });
 
+            services.AddCors();
+
             
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
