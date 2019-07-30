@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CB8_TeamYBD_GroupProject_MVC.Migrations
 {
     [DbContext(typeof(CB8_TeamYBD_GroupProject_MVCContext))]
-    [Migration("20190730120320_init")]
+    [Migration("20190730121309_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,8 +87,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Migrations
                         .IsRequired();
 
                     b.Property<bool>("Paid");
-
-                    b.Property<DateTime>("PostDate");
 
                     b.Property<string>("Title")
                         .IsRequired();

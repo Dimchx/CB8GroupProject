@@ -86,8 +86,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Migrations
 
                     b.Property<bool>("Paid");
 
-                    b.Property<DateTime>("PostDate");
-
                     b.Property<string>("Title")
                         .IsRequired();
 

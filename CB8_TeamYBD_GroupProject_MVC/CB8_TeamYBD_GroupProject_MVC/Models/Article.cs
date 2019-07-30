@@ -19,6 +19,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
         [Required]
         public string Content { get; set; }
         public bool Paid { get; set; }
-        public DateTime PostDate { get; set; }
+        
     }
 }

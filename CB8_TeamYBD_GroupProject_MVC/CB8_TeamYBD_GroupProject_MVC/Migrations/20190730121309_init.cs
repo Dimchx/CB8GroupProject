@@ -78,8 +78,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Migrations
                     Title = table.Column<string>(nullable: false),
                     AuthorId = table.Column<string>(nullable: false),
                     Content = table.Column<string>(nullable: false),
-                    Paid = table.Column<bool>(nullable: false),
-                    PostDate = table.Column<DateTime>(nullable: false)
+                    Paid = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
