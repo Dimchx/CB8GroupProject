@@ -25,9 +25,9 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         }
 
         
-        public async Task<IActionResult> ReadAsync(int Id)
+        public async Task<IActionResult> Readt(int Id)
         {
-            return View(await _context.Articles.FindAsync(Id));
+            return View( _context.Articles.Find(Id));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
