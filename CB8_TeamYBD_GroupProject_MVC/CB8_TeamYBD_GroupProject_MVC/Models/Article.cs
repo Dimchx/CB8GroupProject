@@ -14,7 +14,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
-        [Required]
         public CB8_TeamYBD_GroupProject_MVCUser Author { get; set; }
         [Required]
         public string Content { get; set; }
