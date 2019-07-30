@@ -25,7 +25,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         }
 
         
-        public async Task<IActionResult> Readt(int Id)
+        public Task<IActionResult> Read(int Id)
         {
             return View( _context.Articles.Find(Id));
         }
