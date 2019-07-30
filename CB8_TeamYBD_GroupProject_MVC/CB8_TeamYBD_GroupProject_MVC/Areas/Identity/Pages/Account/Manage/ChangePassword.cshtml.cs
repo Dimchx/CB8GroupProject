@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,13 +12,13 @@ namespace CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<CB8_TeamYBD_GroupProject_MVCUser> _userManager;
+        private readonly SignInManager<CB8_TeamYBD_GroupProject_MVCUser> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
 
         public ChangePasswordModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<CB8_TeamYBD_GroupProject_MVCUser> userManager,
+            SignInManager<CB8_TeamYBD_GroupProject_MVCUser> signInManager,
             ILogger<ChangePasswordModel> logger)
         {
             _userManager = userManager;

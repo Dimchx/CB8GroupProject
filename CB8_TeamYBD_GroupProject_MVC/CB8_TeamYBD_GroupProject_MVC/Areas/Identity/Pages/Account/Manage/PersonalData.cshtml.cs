@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,11 +9,11 @@ namespace CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<CB8_TeamYBD_GroupProject_MVCUser> _userManager;
         private readonly ILogger<PersonalDataModel> _logger;
 
         public PersonalDataModel(
-            UserManager<IdentityUser> userManager,
+            UserManager<CB8_TeamYBD_GroupProject_MVCUser> userManager,
             ILogger<PersonalDataModel> logger)
         {
             _userManager = userManager;

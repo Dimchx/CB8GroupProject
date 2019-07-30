@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CB8_TeamYBD_GroupProject_MVC.Data;
 using CB8_TeamYBD_GroupProject_MVC.Models;
 using Microsoft.AspNetCore.Authorization;
-using CB8_TeamYBD_GroupProject_MVC.Managers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI;
@@ -19,8 +17,8 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
     [Authorize]
     public class ArticlesController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public ArticlesController(ApplicationDbContext context)
+        private readonly CB8_TeamYBD_GroupProject_MVCContext _context;
+        public ArticlesController(CB8_TeamYBD_GroupProject_MVCContext context)
         {
             _context = context;
         }
@@ -31,7 +29,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = _context.Users.Find(userId);
-            var articles = await _context.Article.Where(x => x.Author == user).ToListAsync();
+            var articles = await _context.Articles.Where(x => x.Author == user).ToListAsync();
             return View(articles);
         }
 
@@ -43,7 +41,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Article
+            var article = await _context.Articles
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (article == null)
             {
@@ -87,7 +85,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Article.FindAsync(id);
+            var article = await _context.Articles.FindAsync(id);
             if (article == null)
             {
                 return NotFound();
@@ -138,7 +136,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Article
+            var article = await _context.Articles
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (article == null)
             {
@@ -153,15 +151,15 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var article = await _context.Article.FindAsync(id);
-            _context.Article.Remove(article);
+            var article = await _context.Articles.FindAsync(id);
+            _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArticleExists(int id)
         {
-            return _context.Article.Any(e => e.Id == id);
+            return _context.Articles.Any(e => e.Id == id);
         }
     }
 }

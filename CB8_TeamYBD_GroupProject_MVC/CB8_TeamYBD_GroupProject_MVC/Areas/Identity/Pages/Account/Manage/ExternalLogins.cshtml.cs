@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +12,12 @@ namespace CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<CB8_TeamYBD_GroupProject_MVCUser> _userManager;
+        private readonly SignInManager<CB8_TeamYBD_GroupProject_MVCUser> _signInManager;
 
         public ExternalLoginsModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<CB8_TeamYBD_GroupProject_MVCUser> userManager,
+            SignInManager<CB8_TeamYBD_GroupProject_MVCUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

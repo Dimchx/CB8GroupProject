@@ -17,7 +17,7 @@
 
 	if ( typeof module === "object" && typeof module.exports === "object" ) {
 
-		// For CommonJS and CommonJS-like environments where a proper `window`
+		// For CommonJS and CommonJS-Like environments where a proper `window`
 		// is present, execute the factory and get jQuery.
 		// For environments that do not have a `window` with a `document`
 		// (such as Node.js), expose a factory as module.exports.
@@ -218,7 +218,7 @@ jQuery.fn = jQuery.prototype = {
 	},
 
 	// For internal use only.
-	// Behaves like an Array's method, not like a jQuery method.
+	// Behaves Like an Array's method, not Like a jQuery method.
 	push: push,
 	sort: arr.sort,
 	splice: arr.splice
@@ -396,7 +396,7 @@ jQuery.extend( {
 	},
 
 	// Support: Android <=4.0 only, PhantomJS 1 only
-	// push.apply(_, arraylike) throws on ancient WebKit
+	// push.apply(_, arrayLike) throws on ancient WebKit
 	merge: function( first, second ) {
 		var len = +second.length,
 			j = 0,
@@ -2824,7 +2824,7 @@ function winnow( elements, qualifier, not ) {
 		} );
 	}
 
-	// Arraylike of elements (jQuery, arguments, Array)
+	// ArrayLike of elements (jQuery, arguments, Array)
 	if ( typeof qualifier !== "string" ) {
 		return jQuery.grep( elements, function( elem ) {
 			return ( indexOf.call( qualifier, elem ) > -1 ) !== not;
@@ -3206,16 +3206,16 @@ function createOptions( options ) {
  *	options: an optional list of space-separated options that will change how
  *			the callback list behaves or a more traditional option object
  *
- * By default a callback list will act like an event callback list and can be
+ * By default a callback list will act Like an event callback list and can be
  * "fired" multiple times.
  *
  * Possible options:
  *
- *	once:			will ensure the callback list can only be fired once (like a Deferred)
+ *	once:			will ensure the callback list can only be fired once (Like a Deferred)
  *
  *	memory:			will keep track of previous values and will call any callback added
  *					after the list has been fired right away with the latest "memorized"
- *					values (like a Deferred)
+ *					values (Like a Deferred)
  *
  *	unique:			will ensure a callback can only be added once (no duplicate in the list)
  *
@@ -3783,7 +3783,7 @@ jQuery.extend( {
 				};
 			};
 
-		// Single- and empty arguments are adopted like Promise.resolve
+		// Single- and empty arguments are adopted Like Promise.resolve
 		if ( remaining <= 1 ) {
 			adoptValue( singleValue, master.done( updateFunc( i ) ).resolve, master.reject,
 				!remaining );
@@ -3796,7 +3796,7 @@ jQuery.extend( {
 			}
 		}
 
-		// Multiple arguments are aggregated like Promise.all array elements
+		// Multiple arguments are aggregated Like Promise.all array elements
 		while ( i-- ) {
 			adoptValue( resolveValues[ i ], updateFunc( i ), master.reject );
 		}
@@ -4023,7 +4023,7 @@ Data.prototype = {
 			// Always return an empty object.
 			if ( acceptData( owner ) ) {
 
-				// If it is a node unlikely to be stringify-ed or looped over
+				// If it is a node unLikely to be stringify-ed or looped over
 				// use plain assignment
 				if ( owner.nodeType ) {
 					owner[ this.expando ] = value;
@@ -4756,7 +4756,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 			if ( toType( elem ) === "object" ) {
 
 				// Support: Android <=4.0 only, PhantomJS 1 only
-				// push.apply(_, arraylike) throws on ancient WebKit
+				// push.apply(_, arrayLike) throws on ancient WebKit
 				jQuery.merge( nodes, elem.nodeType ? [ elem ] : elem );
 
 			// Convert non-html into a text node
@@ -4779,7 +4779,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 				}
 
 				// Support: Android <=4.0 only, PhantomJS 1 only
-				// push.apply(_, arraylike) throws on ancient WebKit
+				// push.apply(_, arrayLike) throws on ancient WebKit
 				jQuery.merge( nodes, tmp.childNodes );
 
 				// Remember the top-level container
@@ -5731,7 +5731,7 @@ function domManip( collection, args, callback, ignored ) {
 					if ( hasScripts ) {
 
 						// Support: Android <=4.0 only, PhantomJS 1 only
-						// push.apply(_, arraylike) throws on ancient WebKit
+						// push.apply(_, arrayLike) throws on ancient WebKit
 						jQuery.merge( scripts, getAll( node, "script" ) );
 					}
 				}
@@ -6032,7 +6032,7 @@ jQuery.each( {
 			jQuery( insert[ i ] )[ original ]( elems );
 
 			// Support: Android <=4.0 only, PhantomJS 1 only
-			// .get() because push.apply(_, arraylike) throws on ancient WebKit
+			// .get() because push.apply(_, arrayLike) throws on ancient WebKit
 			push.apply( ret, elems.get() );
 		}
 
@@ -6914,7 +6914,7 @@ function defaultPrefilter( elem, props, opts ) {
 		}
 	}
 
-	// Bail out if this is a no-op like .hide().hide()
+	// Bail out if this is a no-op Like .hide().hide()
 	propTween = !jQuery.isEmptyObject( props );
 	if ( !propTween && jQuery.isEmptyObject( orig ) ) {
 		return;
