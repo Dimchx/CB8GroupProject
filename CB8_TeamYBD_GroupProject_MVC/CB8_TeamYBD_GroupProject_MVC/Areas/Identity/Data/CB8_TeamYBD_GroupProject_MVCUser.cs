@@ -10,5 +10,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data
     public class CB8_TeamYBD_GroupProject_MVCUser : IdentityUser
     {
         public bool Premium { get; set; }
+        public byte[] ProfilePicture { get; set; }
     }
 }
