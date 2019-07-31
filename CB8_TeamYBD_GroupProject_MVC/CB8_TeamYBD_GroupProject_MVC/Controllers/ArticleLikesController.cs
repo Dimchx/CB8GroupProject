@@ -80,7 +80,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = _context.Users.Find(userId);
             like.User = user;
-            like.Article = new Article { Id = vm.ArticleId };
+            like.Article = _context.Articles.Find(vm.ArticleId);
             like.LikeDateTime = DateTime.Now;
 
             _context.ArticleLikes.Add(like);
