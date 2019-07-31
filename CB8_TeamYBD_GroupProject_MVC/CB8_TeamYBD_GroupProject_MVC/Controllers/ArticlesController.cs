@@ -102,18 +102,24 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,Paid")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Author,Title,Content,Paid")] ArticleViewModel article)
         {
             if (id != article.Id)
             {
                 return NotFound();
             }
-
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            article.Author = user;
+            var _article = (Article)article;
+            _article.Id = article.Id;
+            _context.Attach(_article);
+                        
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(article);
+                    _context.Update(_article);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
