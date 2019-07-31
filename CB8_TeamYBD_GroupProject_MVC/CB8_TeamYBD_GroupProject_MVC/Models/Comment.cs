@@ -13,5 +13,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
         public CB8_TeamYBD_GroupProject_MVCUser User { get; set; }
         public Article Article { get; set; }
         public string Content { get; set; }
+        public DateTime CommentDateTime { get; set; }
     }
 }

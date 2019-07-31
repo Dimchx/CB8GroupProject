@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using System.Security.Claims;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -22,23 +23,13 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         // GET: api/Likes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArticleLike>>> GetArticleLike()
+        public async Task<ActionResult<bool>> GetArticleLike(int Id)
         {
-            return await _context.ArticleLikes.ToListAsync();
-        }
-
-        // GET: api/Likes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ArticleLike>> GetArticleLike(int id)
-        {
-            var ArticleLike = await _context.ArticleLikes.FindAsync(id);
-
-            if (ArticleLike == null)
-            {
-                return NotFound();
-            }
-
-            return ArticleLike;
+            var article = _context.Articles.Find(Id);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            var like = await _context.ArticleLikes.Where(x => x.User == user).ToListAsync();
+            return like.Count()>0;
         }
 
         // PUT: api/Likes/5
@@ -76,11 +67,21 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         public async Task<ActionResult<ArticleLike>> PostArticleLike([FromBody] ArticleLikeViewModel vm)
         {
             ArticleLike like = new ArticleLike();
-            // like.User
-            like.Article = new Article { Id = vm.ArticleId };
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            like.User = user;
+            like.Article = _context.Articles.Find(vm.ArticleId);
             like.LikeDateTime = DateTime.Now;
 
-            _context.ArticleLikes.Add(like);
+            if (_context.ArticleLikes.Where(x => x.User == user && x.Article == like.Article).Count() == 0){
+
+                _context.ArticleLikes.Add(like);
+            }
+            else
+            {
+                _context.ArticleLikes.RemoveRange(_context.ArticleLikes.Where(x => x.User == user && x.Article == like.Article).ToList());
+            }
+            
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetArticleLike", new { id = like.Id }, like);
