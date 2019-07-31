@@ -9,7 +9,7 @@
 
 <div class="card text-white bg-info mb-3" id="card-content">
     <div class="card-header"><h1 style="color:#FFF;">@Model.Title</h1></div>
-    <div class="card-body">
+    <div id="article-content" class="card-body">
         <p class="card-text">@Html.Raw(@Model.Content)</p>
     </div>
     <div>
@@ -18,7 +18,7 @@
     </div>
 </div>
 
-@section scripts {
+@section scripts { 
 <script>
     $(document).ready(function () {
         $(".fa-smile-wink").on("click", function (e) {
