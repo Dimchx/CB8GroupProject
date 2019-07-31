@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using CB8_TeamYBD_GroupProject_MVC.ViewModels;
+using System.Security.Claims;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -73,8 +75,14 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         // POST: api/Comments
         [HttpPost]
-        public async Task<ActionResult<Comment>> PostComment(Comment comment)
+        public async Task<ActionResult<Comment>> PostComment([FromBody] CommentViewModel vm)
         {
+            Comment comment = new Comment();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            comment.User = user;
+            comment.Article = _context.Articles.Find(vm.ArticleId);
+            comment.CommentDateTime = DateTime.Now;
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 

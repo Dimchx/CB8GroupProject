@@ -37,7 +37,8 @@
 @section scripts { 
 <script>
     $(document).ready(function () {
-        $(".fa-smile-wink").on("click", function (e) {
+
+        $(".fa-smile-wink").on(, function (e) {
             $.ajax({
                 method: 'POST',
                 url: '/api/ArticleLikes/',
