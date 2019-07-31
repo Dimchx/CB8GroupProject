@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using System.Security.Claims;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -76,7 +77,9 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         public async Task<ActionResult<ArticleLike>> PostArticleLike([FromBody] ArticleLikeViewModel vm)
         {
             ArticleLike like = new ArticleLike();
-            // like.User
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            like.User = user;
             like.Article = new Article { Id = vm.ArticleId };
             like.LikeDateTime = DateTime.Now;
 
