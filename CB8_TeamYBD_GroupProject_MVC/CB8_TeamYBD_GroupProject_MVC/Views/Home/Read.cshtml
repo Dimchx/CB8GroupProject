@@ -61,12 +61,10 @@
                     console.log("SUCCESS!");
                     console.log(response);
                     if (response.id != 0) {
-                        //e.target.classList.remove('fa-smile-wink')
                         e.target.classList.add('liked')
                     }
                     else {
                         e.target.classList.remove('liked')
-                        //e.target.classList.add('fa-smile-wink')
                     }
                 },
                 error: function (response) {
