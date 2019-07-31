@@ -214,3 +214,9 @@ html {
       cursor: pointer;
       color: white;
 }
+
+
+.btn-outline-secondary {
+    color: rgb(145, 154, 161);
+    border-color: #61dafb;
+}
