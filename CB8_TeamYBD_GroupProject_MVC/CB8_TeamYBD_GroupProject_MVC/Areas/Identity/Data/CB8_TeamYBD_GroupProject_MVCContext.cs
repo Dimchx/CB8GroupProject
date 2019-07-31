@@ -6,6 +6,7 @@ using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using CB8_TeamYBD_GroupProject_MVC.Models;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Models
 {
@@ -27,5 +28,9 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+        public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.ArticlePurchase> ArticlePurchases { get; set; }
+        public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.Follow> Follows { get; set; }
+        public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.UserSubcription> UserSubcriptions { get; set; }
+        public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.SubscriptionListing> SubscriptionListings { get; set; }
     }
 }

@@ -16,9 +16,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<CB8_TeamYBD_GroupProject_MVCContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("CB8_TeamYBD_GroupProject_MVCContextConnection")));
+                
 
                 services.AddDefaultIdentity<CB8_TeamYBD_GroupProject_MVCUser>()
                     .AddEntityFrameworkStores<CB8_TeamYBD_GroupProject_MVCContext>();

@@ -10,16 +10,12 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
 {
     public class SubscriptionListing
     {
-        public SubscriptionListing(CB8_TeamYBD_GroupProject_MVCUser user)
-        {
-            User = user;
-        }
-
         public int Id { get; set; }
         public CB8_TeamYBD_GroupProject_MVCUser User { get; set; }
-        public double MonthlyPrice { get; set; }
-        public double TrimesterPrice { get; set; }
-        public double SemesterPrice { get; set; }
-        public double YearlyPrice { get; set; }
+        public string Title { get; set; }
+        public double Price { get; set; }
+        public int DayDuration { get; set; }
+        public int MonthDuration { get; set; }
+
     }
 }

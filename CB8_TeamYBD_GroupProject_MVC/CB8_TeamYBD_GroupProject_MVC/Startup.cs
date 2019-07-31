@@ -48,7 +48,9 @@ namespace CB8_TeamYBD_GroupProject_MVC
 
             services.AddCors();
 
-            
+            services.AddDbContext<CB8_TeamYBD_GroupProject_MVCContext>(options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("CB8_TeamYBD_GroupProject_MVCContextConnection")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
