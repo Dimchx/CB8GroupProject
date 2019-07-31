@@ -83,6 +83,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             comment.User = user;
             comment.Article = _context.Articles.Find(vm.ArticleId);
             comment.CommentDateTime = DateTime.Now;
+            comment.Content = vm.Content;
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 

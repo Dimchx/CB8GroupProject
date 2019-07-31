@@ -26,10 +26,10 @@
         @User.Identity.Name
     </div>
     <div>
-        <textarea data-articleId="@Model.Id" class="form-control" id="comment-textarea" rows="3" placeholder="write a comment..."></textarea>
+        <textarea class="form-control" id="comment-textarea" rows="3" placeholder="write a comment..."></textarea>
     </div>
     <div>
-        <button id="submit-comment" type="button" class="btn btn-primary disabled">Submit</button>
+        <button data-articleId="@Model.Id" id="submit-comment" type="button" class="btn btn-primary disabled">Submit</button>
     </div>
     
 </div>
@@ -37,7 +37,7 @@
 @section scripts { 
 <script>
     $(document).ready(function () {
-        $(".submit-comment").on("click", function (e) {
+        $(".btn-primary").on("click", function (e) {
             $.ajax({
                 method: 'POST',
                 url: '/api/Comments/',
@@ -45,8 +45,16 @@
                 accepts: 'application/json',
                 dataType: 'json',
                 data: JSON.stringify({
-                    articleId: $(e.currentTarget).attr("data-articleId")
-                }),)
+                    articleId: $(e.currentTarget).attr("data-articleId"),
+                    content: $("#comment-textarea").val()
+                }),
+                success: function (response) { console.log(response); },
+                error: function (response) {
+                    console.log("ERROR!!!!!!!!!!");
+                    console.log(response);
+                }
+            });
+        });
         $(".fa-smile-wink").on("click", function (e) {
             $.ajax({
                 method: 'POST',
