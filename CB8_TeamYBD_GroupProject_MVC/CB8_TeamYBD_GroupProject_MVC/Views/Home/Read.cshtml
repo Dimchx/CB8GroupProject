@@ -26,7 +26,7 @@
         @User.Identity.Name
     </div>
     <div>
-        <textarea class="form-control" id="comment-textarea" rows="3" placeholder="write a comment..."></textarea>
+        <textarea data-articleId="@Model.Id" class="form-control" id="comment-textarea" rows="3" placeholder="write a comment..."></textarea>
     </div>
     <div>
         <button id="submit-comment" type="button" class="btn btn-primary disabled">Submit</button>
@@ -37,8 +37,17 @@
 @section scripts { 
 <script>
     $(document).ready(function () {
-
-        $(".fa-smile-wink").on(, function (e) {
+        $(".submit-comment").on("click", function (e) {
+            $.ajax({
+                method: 'POST',
+                url: '/api/Comments/',
+                contentType: "application/json; charset=utf-8",
+                accepts: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    articleId: $(e.currentTarget).attr("data-articleId")
+                }),)
+        $(".fa-smile-wink").on("click", function (e) {
             $.ajax({
                 method: 'POST',
                 url: '/api/ArticleLikes/',
@@ -52,12 +61,10 @@
                     console.log("SUCCESS!");
                     console.log(response);
                     if (response.id != 0) {
-                        //e.target.classList.remove('fa-smile-wink')
                         e.target.classList.add('liked')
                     }
                     else {
                         e.target.classList.remove('liked')
-                        //e.target.classList.add('fa-smile-wink')
                     }
                 },
                 error: function (response) {
