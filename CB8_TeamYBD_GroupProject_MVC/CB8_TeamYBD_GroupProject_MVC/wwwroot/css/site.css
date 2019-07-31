@@ -163,6 +163,8 @@ html {
 }
 
 .fa-smile-wink {
+    
+    color: white;
     padding-bottom: 7px;
     padding-left: 10px;
 }
@@ -192,4 +194,23 @@ html {
 
 .table{
     color: black;
+}
+
+#img-comment{
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+#submit-comment {
+    margin-top: 8px;
+}
+
+.liked {
+    color: #61dafb;
+}
+
+.liked:hover {
+      cursor: pointer;
+      color: white;
 }

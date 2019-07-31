@@ -83,7 +83,15 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             like.Article = _context.Articles.Find(vm.ArticleId);
             like.LikeDateTime = DateTime.Now;
 
-            _context.ArticleLikes.Add(like);
+            if (_context.ArticleLikes.Where(x => x.User == user && x.Article == like.Article).Count() == 0){
+
+                _context.ArticleLikes.Add(like);
+            }
+            else
+            {
+                _context.ArticleLikes.RemoveRange(_context.ArticleLikes.Where(x => x.User == user && x.Article == like.Article).ToList());
+            }
+            
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetArticleLike", new { id = like.Id }, like);
