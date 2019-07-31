@@ -193,3 +193,8 @@ html {
 .table{
     color: black;
 }
+
+.btn-outline-secondary {
+    color: rgb(145, 154, 161);
+    border-color: #61dafb;
+}
