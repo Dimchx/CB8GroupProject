@@ -89,6 +89,22 @@ html {
     color: #61dafb !important;
 }
 
+#logout-button{
+    color:white !important;
+}
+
+#logout-button:hover {
+    color: #61dafb !important;
+}
+
+#user-name-link{
+    color: white !important;
+}
+
+#user-name-link:hover {
+    color: #61dafb !important;
+}
+
 .card {
     width: 370px;
     ;
