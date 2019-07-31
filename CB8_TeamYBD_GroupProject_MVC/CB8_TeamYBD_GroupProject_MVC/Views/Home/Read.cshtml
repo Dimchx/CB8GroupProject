@@ -10,41 +10,46 @@
 <div class="card text-white bg-info mb-3" id="card-content">
     <div class="card-header"><h1 style="color:#FFF;">@Model.Title</h1></div>
     <div class="card-body">
-        <h4 class="card-title">Info card title</h4>
         <p class="card-text">@Html.Raw(@Model.Content)</p>
-        <i id="like-icon" class="far fa-smile-wink fa-2x"></i>
+    </div>
+    <div>
+        <i data-articleId="@Model.Id" class="far fa-smile-wink fa-2x"></i>
+        <i class="far fa-share-square fa-2x"></i>
     </div>
 </div>
 
 @section scripts {
-    <script>
-        $(document).ready(function () {
-            $(".fa-smile-wink").on("click", function (e) {
-                $.ajax({
-                    method: 'POST',
-                    url: '/api/ArticleLikes/',
-                    data: {
-                        articleId: e.target.id
-                    },
-                    success: function (response) {
-                        console.log("SUCCESS!");
-                        console.log(response);
-                        if (response) {
-                            e.target.classList.remove('fa-smile-wink')
-                            e.target.classList.add('fa-2x:hover')
-                        }
-                        else {
-                            e.target.classList.remove('fa-2x:hover')
-                            e.target.classList.add('fa-smile-wink')
-                        }
-                    },
-                    error: function (response) {
-                        console.log("ERROR!!!!!!!!!!");
-                        console.log(response);
+<script>
+    $(document).ready(function () {
+        $(".fa-smile-wink").on("click", function (e) {
+            $.ajax({
+                method: 'POST',
+                url: '/api/ArticleLikes/',
+                contentType: "application/json; charset=utf-8",
+                accepts: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    articleId: $(e.currentTarget).attr("data-articleId")
+                }),
+                success: function (response) {
+                    console.log("SUCCESS!");
+                    console.log(response);
+                    if (response) {
+                        e.target.classList.remove('fa-smile-wink')
+                        e.target.classList.add('fa-smile-wink:hover')
                     }
-                });
+                    else {
+                        e.target.classList.remove('fa-smile-wink:hover')
+                        e.target.classList.add('fa-smile-wink')
+                    }
+                },
+                error: function (response) {
+                    console.log("ERROR!!!!!!!!!!");
+                    console.log(response);
+                }
             });
         });
-    </script>
+    });
+</script>
 }
 

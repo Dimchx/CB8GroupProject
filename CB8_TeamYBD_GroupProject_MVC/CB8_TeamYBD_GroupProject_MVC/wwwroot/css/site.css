@@ -68,16 +68,30 @@ html {
 
 }
 
+
 .navbar-dark .navbar-nav .nav-link{
     color: white;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #61dafb;
 }
 
 .navbar-dark .navbar-nav .nav-link.premium{
     color: gold;
 }
 
+#login-button:hover {
+    color: #61dafb !important;
+}
+
+#register-button:hover {
+    color: #61dafb !important;
+}
+
 .card {
-    width: 370px;;
+    width: 370px;
+    ;
     color: black;
     height: calc(100vh - 94px - 60px);
     overflow: hidden;
@@ -132,13 +146,23 @@ html {
     background: linear-gradient(#353333, #606066) !important;
 }
 
-
-#like-icon {
-    bottom: 110px;
-    position: fixed;
-    
+.fa-smile-wink {
+    padding-bottom: 7px;
+    padding-left: 10px;
 }
-.fa-2x:hover {
+
+.fa-smile-wink:hover {
     cursor: pointer;
     color: #61dafb;
 }
+
+.fa-share-square {
+    margin-left: 25px;
+    
+}
+
+.fa-share-square:hover {
+    cursor: pointer;
+    color: #61dafb;
+}
+

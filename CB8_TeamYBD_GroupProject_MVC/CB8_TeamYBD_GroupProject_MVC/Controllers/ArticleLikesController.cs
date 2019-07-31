@@ -73,12 +73,17 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         // POST: api/Likes
         [HttpPost]
-        public async Task<ActionResult<ArticleLike>> PostArticleLike(ArticleLike ArticleLike)
+        public async Task<ActionResult<ArticleLike>> PostArticleLike([FromBody] ArticleLikeViewModel vm)
         {
-            _context.ArticleLikes.Add(ArticleLike);
+            ArticleLike like = new ArticleLike();
+            // like.User
+            like.Article = new Article { Id = vm.ArticleId };
+            like.LikeDateTime = DateTime.Now;
+
+            _context.ArticleLikes.Add(like);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticleLike", new { id = ArticleLike.Id }, ArticleLike);
+            return CreatedAtAction("GetArticleLike", new { id = like.Id }, like);
         }
 
         // DELETE: api/Likes/5
