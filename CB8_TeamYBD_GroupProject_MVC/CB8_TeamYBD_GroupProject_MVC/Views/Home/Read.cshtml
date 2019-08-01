@@ -57,8 +57,14 @@
             <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
         </div>
         <div>
-            <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
-            <button type="button" class="btn btn-outline-success button-cmnt btn-sm">Edit</button>
+            <button type="button" class="btn btn-outline-info button-cmnt btn-sm">Like</button>
+            <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
+
+            @if (i.User.Id == Model.UserId)
+            {
+                <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
+                <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
+            }
 
         </div>
     </div>
