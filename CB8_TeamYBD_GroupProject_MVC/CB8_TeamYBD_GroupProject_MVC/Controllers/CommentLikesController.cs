@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using System.Security.Claims;
+using CB8_TeamYBD_GroupProject_MVC.ViewModels;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -22,24 +24,16 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         // GET: api/CommentLikes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CommentLike>>> GetCommentLike()
+        public async Task<ActionResult<bool>> GetCommentLike(int Id)
         {
-            return await _context.CommentLikes.ToListAsync();
+            var comment = _context.Comments.Find(Id);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            var like = await _context.CommentLikes.Where(x => x.User == user).ToListAsync();
+            return like.Count() > 0;
         }
 
-        // GET: api/CommentLikes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CommentLike>> GetCommentLike(int id)
-        {
-            var commentLike = await _context.CommentLikes.FindAsync(id);
-
-            if (commentLike == null)
-            {
-                return NotFound();
-            }
-
-            return commentLike;
-        }
+        
 
         // PUT: api/CommentLikes/5
         [HttpPut("{id}")]
@@ -73,12 +67,28 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         // POST: api/CommentLikes
         [HttpPost]
-        public async Task<ActionResult<CommentLike>> PostCommentLike(CommentLike commentLike)
+        public async Task<ActionResult<CommentLike>> PostCommentLike(CommentLikeViewModel vm)
         {
-            _context.CommentLikes.Add(commentLike);
+            CommentLike like = new CommentLike();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            like.User = user;
+            like.Comment = _context.Comments.Find(vm.CommentId);
+            like.LikeDateTime = DateTime.Now;
+
+            if (_context.CommentLikes.Where(x => x.User == user && x.Comment == like.Comment).Count() == 0)
+            {
+
+                _context.CommentLikes.Add(like);
+            }
+            else
+            {
+                _context.CommentLikes.RemoveRange(_context.CommentLikes.Where(x => x.User == user && x.Comment == like.Comment).ToList());
+            }
+            
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCommentLike", new { id = commentLike.Id }, commentLike);
+            return CreatedAtAction("GetCommentLike", new { id = like.Id }, like);
         }
 
         // DELETE: api/CommentLikes/5

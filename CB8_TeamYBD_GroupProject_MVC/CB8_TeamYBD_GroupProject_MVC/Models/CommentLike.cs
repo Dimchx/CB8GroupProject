@@ -12,5 +12,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
         public int Id { get; set; }
         public CB8_TeamYBD_GroupProject_MVCUser User { get; set; }
         public Comment Comment { get; set; }
+        public DateTime LikeDateTime { get; set; }
     }
 }
