@@ -90,8 +90,8 @@
                     }),
                     success: function (response) {
                         console.log(response.content);
-                         $("#comments").append("<div class=\"submitcomment\">" + response.content + "</div>");
-                        
+                         $("#comments").append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div class='submitcomment'>" + response.content + "</div><div>");
+                        console.log(response);
                     },
                     error: function (response) {
                         console.log("ERROR!!!!!!!!!!");
