@@ -10,28 +10,34 @@
 <script src="https://kit.fontawesome.com/e827195700.js"></script>
 
 <div class="card text-white bg-info mb-3" id="card-content">
-    <div class="card-header"><h1 style="color:#FFF;">@Model.Article.Title</h1></div>
+    <div class="card-header">
+    <h1 style="color:#FFF;">@Model.Article.Title</h1>
+    <time>@Model.ArticlePostDateTime</time>
+    </div>
+
     <div id="article-content" class="card-body">
         <p class="card-text">@Html.Raw(@Model.Article.Content)</p>
     </div>
     <div>
-        @{
+        @{            
             bool present = false;
             foreach (var i in Model.Likes)
             {
-
-
+                if(i.User.Id == Model.UserId)
+                {
+                    present = true;
+                }
             }
             if (present == true)
             {
-                <i data-articleId="@Model.Article.Id" class="liked"></i>
+                <i data-articleId="@Model.Article.Id" class="far fa-smile-wink fa-2x liked"></i>
             }
             else
             {
                 <i data-articleId="@Model.Article.Id" class="far fa-smile-wink fa-2x"></i>
                 }
             }
-    <button>@Model.Likes.Count()</button>
+    <button id="likes-count">@Model.Likes.Count()</button>
     <i class="far fa-share-square fa-2x"></i>
     </div>
 </div>
@@ -41,7 +47,7 @@
     <div>
         <div>
             <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
-            
+            @i.User.UserName
         </div>
         <div>
             <blockquote style="border:solid">@i.Content</blockquote>
@@ -103,9 +109,13 @@
                         console.log(response);
                         if (response.id != 0) {
                             e.target.classList.add('liked')
+                            var num = +$("#likes-count").text() + 1
+                            $("#likes-count").text(num)
                         }
                         else {
                             e.target.classList.remove('liked')
+                            var num = $("#likes-count").text() - 1
+                            $("#likes-count").text(num)
                         }
                     },
                     error: function (response) {

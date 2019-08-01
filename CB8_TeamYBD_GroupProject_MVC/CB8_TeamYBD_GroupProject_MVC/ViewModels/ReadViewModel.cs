@@ -9,6 +9,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.ViewModels
 {
     public class ReadViewModel
     {
+        public string UserId { get; set; }
         public Article Article {get;set;}
         public DateTime ArticlePostDateTime { get; set; }
         public CB8_TeamYBD_GroupProject_MVCUser Author { get; set; }

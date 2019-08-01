@@ -71,10 +71,12 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = _context.Users.Find(userId);
             article.Author = user;
+            Article post = (Article)article;
+            post.PostDateTime = DateTime.Now;
             if (ModelState.IsValid)
             {
 
-                _context.Add((Article)article);
+                _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

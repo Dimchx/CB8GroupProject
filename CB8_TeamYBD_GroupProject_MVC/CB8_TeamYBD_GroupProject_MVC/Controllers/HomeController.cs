@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using CB8_TeamYBD_GroupProject_MVC.ViewModels;
 using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -29,12 +30,22 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         
         public async Task<IActionResult> Read(int Id)
         {
+            string userId;
+            try
+            {
+                userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            }
+            catch
+            {
+                userId = "";
+            }
             Article article = _context.Articles.Find(Id);
             CB8_TeamYBD_GroupProject_MVCUser author = article.Author;
+            bool paywall = article.Paid;
             DateTime dateTime = article.PostDateTime;
-            List<ArticleLike> likes = _context.ArticleLikes.Where(x => x.Article == article).ToList();
-            List<Comment> comments = _context.Comments.Where(x => x.Article == article).OrderBy(x=>x.CommentDateTime).ToList();
-            ReadViewModel vm = new ReadViewModel() { Article=article,Author=author,Likes=likes,Comments=comments,ArticlePostDateTime=dateTime };
+            List<ArticleLike> likes = _context.ArticleLikes.Include("User").Where(x => x.Article == article).ToList();
+            List<Comment> comments = _context.Comments.Include("User").Where(x => x.Article == article).OrderBy(x=>x.CommentDateTime).ToList();
+            ReadViewModel vm = new ReadViewModel() { UserId=userId, Article=article,Author=author,Likes=likes,Comments=comments,ArticlePostDateTime=dateTime };
             return View(vm);
         }
 
