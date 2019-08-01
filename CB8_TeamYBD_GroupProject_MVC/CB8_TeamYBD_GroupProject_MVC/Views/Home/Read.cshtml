@@ -145,6 +145,36 @@
                     }
                 });
             });
+            $(".fa-smile-wink").on("click", function (e) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/ArticleLikes/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        articleId: $(e.currentTarget).attr("data-articleId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            e.target.classList.add('liked')
+                            var num = +$("#likes-count").text() + 1
+                            $("#likes-count").text(num)
+                        }
+                        else {
+                            e.target.classList.remove('liked')
+                            var num = $("#likes-count").text() - 1
+                            $("#likes-count").text(num)
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });
         });
     </script>
 }
