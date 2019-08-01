@@ -78,26 +78,28 @@
     <script>
         $(document).ready(function () {
             $(".btn-primary").on("click", function (e) {
-                $.ajax({
-                    method: 'POST',
-                    url: '/api/Comments/',
-                    contentType: "application/json; charset=utf-8",
-                    accepts: 'application/json',
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        articleId: $(e.currentTarget).attr("data-articleId"),
-                        content: $("#comment-textarea").val()
-                    }),
-                    success: function (response) {
-                        console.log(response.content);
-                         $("#comments").append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div>");
-                        console.log(response);
-                    },
-                    error: function (response) {
-                        console.log("ERROR!!!!!!!!!!");
-                        console.log(response);
-                    }
-                });
+                if ($("#comment-textarea").val() != "") {
+                    $.ajax({
+                        method: 'POST',
+                        url: '/api/Comments/',
+                        contentType: "application/json; charset=utf-8",
+                        accepts: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            articleId: $(e.currentTarget).attr("data-articleId"),
+                            content: $("#comment-textarea").val()
+                        }),
+                        success: function (response) {
+                            console.log(response.content);
+                            $("#comments").append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div>");
+                            console.log(response);
+                        },
+                        error: function (response) {
+                            console.log("ERROR!!!!!!!!!!");
+                            console.log(response);
+                        }
+                    });
+                };
 
             });
             $(".fa-smile-wink").on("click", function (e) {
