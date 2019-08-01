@@ -41,20 +41,22 @@
     <i class="far fa-share-square fa-2x"></i>
     </div>
 </div>
+<div id="comments">
 @foreach(var i in Model.Comments)
 {
         
     <div>
         <div>
             <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
-            @i.User.UserName
+             @i.User.UserName
         </div>
         <div>
-            <blockquote style="border:solid">@i.Content</blockquote>
+            <blockquote class="submitcomment" >@i.Content</blockquote>
         </div>
     </div>
     
-}
+    }
+</div>
 <div class="form-group">
     <div>
         <label for="comment-textarea">Comment</label>
@@ -86,7 +88,11 @@
                         articleId: $(e.currentTarget).attr("data-articleId"),
                         content: $("#comment-textarea").val()
                     }),
-                    success: function (response) { console.log(response); },
+                    success: function (response) {
+                        console.log(response.content);
+                         $("#comments").append("<div class=\"submitcomment\">" + response.content + "</div>");
+                        
+                    },
                     error: function (response) {
                         console.log("ERROR!!!!!!!!!!");
                         console.log(response);
