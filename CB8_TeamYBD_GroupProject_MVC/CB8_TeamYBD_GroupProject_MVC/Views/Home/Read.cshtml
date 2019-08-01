@@ -37,7 +37,7 @@
                 <i data-articleId="@Model.Article.Id" class="far fa-smile-wink fa-2x"></i>
             }
         }
-    <span class="badge badge-pill badge-info" id="likes-count">@Model.Likes.Count()</span>
+        <span class="badge badge-pill badge-info" id="likes-count">@Model.Likes.Count()</span>
         <i class="far fa-share-square fa-2x"></i>
     </div>
 </div>
@@ -57,7 +57,7 @@
             <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
         </div>
         <div id="multiple-buttons-comments">
-            <button type="button" class="btn btn-outline-info button-cmnt btn-sm">Like</button>
+            <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x=>x.Comment.Id==i.Id).Count()</span></button>
             <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
 
             @if (i.User.Id == Model.UserId)
@@ -145,28 +145,29 @@
                     }
                 });
             });
-            /*$(".fa-smile-wink").on("click", function (e) {
+            $(".comment-like").on("click", function (e) {
+                const id = $(e.currentTarget).attr("data-commentId");
                 $.ajax({
                     method: 'POST',
-                    url: '/api/ArticleLikes/',
+                    url: '/api/CommentLikes/',
                     contentType: "application/json; charset=utf-8",
                     accepts: 'application/json',
                     dataType: 'json',
                     data: JSON.stringify({
-                        articleId: $(e.currentTarget).attr("data-articleId")
+                        commentId: $(e.currentTarget).attr("data-commentId")
                     }),
                     success: function (response) {
                         console.log("SUCCESS!");
                         console.log(response);
                         if (response.id != 0) {
                             e.target.classList.add('liked')
-                            var num = +$("#likes-count").text() + 1
-                            $("#likes-count").text(num)
+                            var num = +$("#"+id).text() + 1
+                            $("#"+id).text(num)
                         }
                         else {
                             e.target.classList.remove('liked')
-                            var num = $("#likes-count").text() - 1
-                            $("#likes-count").text(num)
+                            var num = $("#"+id).text() - 1
+                            $("#"+id).text(num)
                         }
                     },
                     error: function (response) {
@@ -174,7 +175,7 @@
                         console.log(response);
                     }
                 });
-            }); */
+            });
         });
     </script>
 }
