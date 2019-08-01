@@ -234,6 +234,11 @@ html {
     margin-bottom: 5px;
 }
 
-.badge {
-    background-color: #61dafb;
+.badge-info {
+    color: #fff;
+    background-color: #606066;
+}
+
+.badge{
+    font-size: 100%;
 }
