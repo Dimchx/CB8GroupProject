@@ -57,7 +57,7 @@
             <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
         </div>
         <div id="multiple-buttons-comments">
-            <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x=>x.Comment.Id==i.Id).Count()</span></button>
+            <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x=>x.Comment.Id==i.Id).Count()</span></button>
             <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
 
             @if (i.User.Id == Model.UserId)
