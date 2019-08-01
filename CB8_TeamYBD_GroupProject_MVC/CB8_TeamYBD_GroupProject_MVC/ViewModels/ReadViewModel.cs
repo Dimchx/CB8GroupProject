@@ -15,5 +15,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.ViewModels
         public CB8_TeamYBD_GroupProject_MVCUser Author { get; set; }
         public List<ArticleLike> Likes { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<CommentLike> CommentLikes { get; set; }
     }
 }
