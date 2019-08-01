@@ -220,3 +220,12 @@ html {
     color: rgb(145, 154, 161);
     border-color: #61dafb;
 }
+
+.card-title {
+
+    margin-bottom: 20px;
+}
+
+.username-card {
+    font-weight: bold;
+}
