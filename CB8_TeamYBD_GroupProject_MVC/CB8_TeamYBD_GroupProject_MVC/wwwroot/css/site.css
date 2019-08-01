@@ -250,3 +250,23 @@ html {
 .liketolike {
     margin-left: 10px;
 }
+
+#home-cards  {
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    height: 230px;
+    background-color: blue;
+    margin: 25px;
+}
+
+#home-cards:hover {
+    cursor: pointer;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+}

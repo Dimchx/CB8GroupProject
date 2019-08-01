@@ -3,9 +3,10 @@
     ViewData["Title"] = "ReedMie";
 }
 
+<div class="home-container">  
 @foreach (var i in Model)
 {
-    <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+    <div id="home-cards" class="card text-white bg-info  mb-3">
         <div class="card-header">@i.Author.UserName</div>
         <div class="card-body">
             <h4 class="card-title">@i.Title</h4>
@@ -13,3 +14,4 @@
         </div>
     </div>
 }
+</div>
