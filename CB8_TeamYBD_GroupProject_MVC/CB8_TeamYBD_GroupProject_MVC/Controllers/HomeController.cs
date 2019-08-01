@@ -24,8 +24,8 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         public IActionResult Index()
         {
-
-            return View(_context.Articles.ToList());
+            List<Article> model = _context.Articles.Include("Author").ToList();
+            return View(model);
         }
 
         
