@@ -229,3 +229,7 @@ html {
 .username-card {
     font-weight: bold;
 }
+
+.submitcomment {
+    border:solid;
+}
