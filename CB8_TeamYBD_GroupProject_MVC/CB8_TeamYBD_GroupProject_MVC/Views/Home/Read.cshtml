@@ -1,5 +1,5 @@
 ﻿@model CB8_TeamYBD_GroupProject_MVC.ViewModels.ReadViewModel
-@using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data
+@using CB8_TeamYBD_GroupProject_MVC.Areas.Identity
 @using System.Security.Claims;
 
 @{
@@ -51,6 +51,9 @@
              @i.User.UserName
         </div>
         <div>
+            @i.CommentDateTime
+        </div>
+        <div>
             <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
         </div>
     </div>
@@ -91,7 +94,7 @@
                         }),
                         success: function (response) {
                             console.log(response.content);
-                             $("#comments").append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div>");
+                             $("#comments").append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div>" + response.commentDateTime + "</div><textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div>");
                              $("#comment-textarea").val('');
                         },
                         error: function (response) {
