@@ -1,4 +1,6 @@
-﻿@model CB8_TeamYBD_GroupProject_MVC.Models.Article
+﻿@model CB8_TeamYBD_GroupProject_MVC.ViewModels.ReadViewModel
+@using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data
+@using System.Security.Claims;
 
 @{
     ViewData["Title"] = "See Article";
@@ -8,15 +10,45 @@
 <script src="https://kit.fontawesome.com/e827195700.js"></script>
 
 <div class="card text-white bg-info mb-3" id="card-content">
-    <div class="card-header"><h1 style="color:#FFF;">@Model.Title</h1></div>
+    <div class="card-header"><h1 style="color:#FFF;">@Model.Article.Title</h1></div>
     <div id="article-content" class="card-body">
-        <p class="card-text">@Html.Raw(@Model.Content)</p>
+        <p class="card-text">@Html.Raw(@Model.Article.Content)</p>
     </div>
     <div>
-        <i data-articleId="@Model.Id" class="far fa-smile-wink fa-2x"></i>
-        <i class="far fa-share-square fa-2x"></i>
+        @{
+            bool present = false;
+            foreach (var i in Model.Likes)
+            {
+
+
+            }
+            if (present == true)
+            {
+                <i data-articleId="@Model.Article.Id" class="liked"></i>
+            }
+            else
+            {
+                <i data-articleId="@Model.Article.Id" class="far fa-smile-wink fa-2x"></i>
+                }
+            }
+    <button>@Model.Likes.Count()</button>
+    <i class="far fa-share-square fa-2x"></i>
     </div>
 </div>
+@foreach(var i in Model.Comments)
+{
+        
+    <div>
+        <div>
+            <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+            
+        </div>
+        <div>
+            <blockquote style="border:solid">@i.Content</blockquote>
+        </div>
+    </div>
+    
+}
 <div class="form-group">
     <div>
         <label for="comment-textarea">Comment</label>
@@ -29,59 +61,60 @@
         <textarea class="form-control" id="comment-textarea" rows="3" placeholder="write a comment..."></textarea>
     </div>
     <div>
-        <button data-articleId="@Model.Id" id="submit-comment" type="button" class="btn btn-primary disabled">Submit</button>
+        <button data-articleId="@Model.Article.Id" id="submit-comment" type="button" class="btn btn-primary disabled">Submit</button>
     </div>
-    
+
 </div>
 
-@section scripts { 
-<script>
-    $(document).ready(function () {
-        $(".btn-primary").on("click", function (e) {
-            $.ajax({
-                method: 'POST',
-                url: '/api/Comments/',
-                contentType: "application/json; charset=utf-8",
-                accepts: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify({
-                    articleId: $(e.currentTarget).attr("data-articleId"),
-                    content: $("#comment-textarea").val()
-                }),
-                success: function (response) { console.log(response); },
-                error: function (response) {
-                    console.log("ERROR!!!!!!!!!!");
-                    console.log(response);
-                }
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".btn-primary").on("click", function (e) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/Comments/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        articleId: $(e.currentTarget).attr("data-articleId"),
+                        content: $("#comment-textarea").val()
+                    }),
+                    success: function (response) { console.log(response); },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+
+            });
+            $(".fa-smile-wink").on("click", function (e) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/ArticleLikes/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        articleId: $(e.currentTarget).attr("data-articleId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            e.target.classList.add('liked')
+                        }
+                        else {
+                            e.target.classList.remove('liked')
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
             });
         });
-        $(".fa-smile-wink").on("click", function (e) {
-            $.ajax({
-                method: 'POST',
-                url: '/api/ArticleLikes/',
-                contentType: "application/json; charset=utf-8",
-                accepts: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify({
-                    articleId: $(e.currentTarget).attr("data-articleId")
-                }),
-                success: function (response) {
-                    console.log("SUCCESS!");
-                    console.log(response);
-                    if (response.id != 0) {
-                        e.target.classList.add('liked')
-                    }
-                    else {
-                        e.target.classList.remove('liked')
-                    }
-                },
-                error: function (response) {
-                    console.log("ERROR!!!!!!!!!!");
-                    console.log(response);
-                }
-            });
-        });
-    });
-</script>
+    </script>
 }
 
