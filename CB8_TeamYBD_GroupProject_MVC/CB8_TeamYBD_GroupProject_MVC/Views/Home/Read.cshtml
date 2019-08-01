@@ -19,11 +19,11 @@
         <p class="card-text">@Html.Raw(@Model.Article.Content)</p>
     </div>
     <div>
-        @{            
+        @{
             bool present = false;
             foreach (var i in Model.Likes)
             {
-                if(i.User.Id == Model.UserId)
+                if (i.User.Id == Model.UserId)
                 {
                     present = true;
                 }
@@ -35,10 +35,10 @@
             else
             {
                 <i data-articleId="@Model.Article.Id" class="far fa-smile-wink fa-2x"></i>
-                }
             }
-    <button id="likes-count">@Model.Likes.Count()</button>
-    <i class="far fa-share-square fa-2x"></i>
+        }
+    <span class="badge badge-pill badge-info" id="likes-count">@Model.Likes.Count()</span>
+        <i class="far fa-share-square fa-2x"></i>
     </div>
 </div>
 <div id="comments">
@@ -56,6 +56,11 @@
         <div>
             <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
         </div>
+        <div>
+            <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
+            <button type="button" class="btn btn-outline-success button-cmnt btn-sm">Edit</button>
+
+        </div>
     </div>
     
     }
@@ -72,7 +77,7 @@
         <textarea class="form-control" id="comment-textarea" rows="3" placeholder="write a comment..." ></textarea>
     </div>
     <div>
-        <button data-articleId="@Model.Article.Id" id="submit-comment" type="button" class="btn btn-primary disabled">Submit</button>
+        <button data-articleId="@Model.Article.Id" id="submit-comment" type="button" class="btn btn-outline-primary btn-sm">Submit</button>
     </div>
 
 </div>
@@ -80,7 +85,7 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-            $(".btn-primary").on("click", function (e) {
+            $(".btn-outline-primary").on("click", function (e) {
                 if ($("#comment-textarea").val() != "") {
                     $.ajax({
                         method: 'POST',

@@ -233,3 +233,7 @@ html {
 .submitcomment {
     margin-bottom: 5px;
 }
+
+.badge {
+    background-color: #61dafb;
+}
