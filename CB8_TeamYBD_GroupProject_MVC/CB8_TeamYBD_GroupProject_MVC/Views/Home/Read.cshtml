@@ -19,11 +19,11 @@
         <p class="card-text">@Html.Raw(@Model.Article.Content)</p>
     </div>
     <div>
-        @{            
+        @{
             bool present = false;
             foreach (var i in Model.Likes)
             {
-                if(i.User.Id == Model.UserId)
+                if (i.User.Id == Model.UserId)
                 {
                     present = true;
                 }
@@ -35,10 +35,10 @@
             else
             {
                 <i data-articleId="@Model.Article.Id" class="far fa-smile-wink fa-2x"></i>
-                }
             }
-    <button id="likes-count">@Model.Likes.Count()</button>
-    <i class="far fa-share-square fa-2x"></i>
+        }
+    <span class="badge badge-pill badge-info" id="likes-count">@Model.Likes.Count()</span>
+        <i class="far fa-share-square fa-2x"></i>
     </div>
 </div>
 <div id="comments">
