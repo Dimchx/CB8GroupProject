@@ -90,7 +90,41 @@
 
 @section scripts {
     <script>
+        function iLike() {
+            return $(".comment-like").on("click", function (e) {
+                const id = $(e.currentTarget).attr("data-commentId");
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/CommentLikes/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        commentId: $(e.currentTarget).attr("data-commentId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            e.target.classList.add('liked')
+                            var num = +$("#" + id).text() + 1
+                            $("#" + id).text(num)
+                        }
+                        else {
+                            e.target.classList.remove('liked')
+                            var num = $("#" + id).text() - 1
+                            $("#" + id).text(num)
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });
+        }   
         $(document).ready(function () {
+            iLike();
             $(".btn-outline-primary").on("click", function (e) {
                 if ($("#comment-textarea").val() != "") {
                     $.ajax({
@@ -104,9 +138,11 @@
                             content: $("#comment-textarea").val()
                         }),
                         success: function (response) {
+                            console.log(response.id)
                             console.log(response.content);
-                             $("#comments").append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div>" + response.commentDateTime + "</div><textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div>");
-                             $("#comment-textarea").val('');
+                             $("#comments").append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div>" + response.commentDateTime + "</div><textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-comments'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-secondary button-cmnt btn-sm'>Reply</button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm'>Edit</button><button type='button' class='btn btn-outline-danger button-cmnt btn-sm'>Delete</button></div><div>");
+                            $("#comment-textarea").val('');
+                            iLike();
                         },
                         error: function (response) {
                             console.log("ERROR!!!!!!!!!!");
@@ -144,38 +180,7 @@
                         console.log(response);
                     }
                 });
-            });
-            $(".comment-like").on("click", function (e) {
-                const id = $(e.currentTarget).attr("data-commentId");
-                $.ajax({
-                    method: 'POST',
-                    url: '/api/CommentLikes/',
-                    contentType: "application/json; charset=utf-8",
-                    accepts: 'application/json',
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        commentId: $(e.currentTarget).attr("data-commentId")
-                    }),
-                    success: function (response) {
-                        console.log("SUCCESS!");
-                        console.log(response);
-                        if (response.id != 0) {
-                            e.target.classList.add('liked')
-                            var num = +$("#"+id).text() + 1
-                            $("#"+id).text(num)
-                        }
-                        else {
-                            e.target.classList.remove('liked')
-                            var num = $("#"+id).text() - 1
-                            $("#"+id).text(num)
-                        }
-                    },
-                    error: function (response) {
-                        console.log("ERROR!!!!!!!!!!");
-                        console.log(response);
-                    }
-                });
-            });
+            });           
         });
     </script>
 }
