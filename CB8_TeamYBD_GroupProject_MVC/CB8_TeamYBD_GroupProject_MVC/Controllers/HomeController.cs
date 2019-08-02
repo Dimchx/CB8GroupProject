@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using CB8_TeamYBD_GroupProject_MVC.ViewModels;
 using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -24,8 +26,8 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         public IActionResult Index()
         {
-            List<Article> model = _context.Articles.Include("Author").OrderByDescending(x=>x.PostDateTime).ToList();
-            return View(model);
+            List<Article> articles = _context.Articles.Include("Author").OrderByDescending(x=>x.PostDateTime).ToList();
+            return View(articles);
         }
 
         

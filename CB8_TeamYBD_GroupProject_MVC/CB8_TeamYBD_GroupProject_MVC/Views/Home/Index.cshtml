@@ -1,16 +1,18 @@
 ﻿@model IEnumerable<CB8_TeamYBD_GroupProject_MVC.Models.Article>
 @{
     ViewData["Title"] = "ReedMie";
+    
 }
 <h1 id="latest-articles">Latest</h1>
 <div class="home-container">  
 @foreach (var i in Model)
 {
+    var a = string.Concat(i.Content.Take(100).ToArray());
     <div id="home-cards" class="card text-white bg-info  mb-3">
         <div class="card-header">@i.Author.UserName</div>
         <div class="card-body">
             <h5 class="card-title">@i.Title</h5>
-            <p id="text-cards-home">@Html.Raw(i.Content)</p>
+            <p id="text-cards-home">@Html.Raw(a) (...)</p>
         </div>
     </div>
 }
