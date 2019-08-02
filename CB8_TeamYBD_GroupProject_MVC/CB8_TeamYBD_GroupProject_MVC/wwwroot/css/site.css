@@ -266,6 +266,7 @@ html {
     transform: scale(1.15);
     border: groove;
     border-color: #61dafb;
+
 }
 
 .home-container {
@@ -280,3 +281,4 @@ html {
     font-weight: bold;
     font-size: 50px;
 }
+
