@@ -49,7 +49,7 @@
 <div id="comments">
     @foreach (var i in Model.Comments)
     {
-        <div id="comment @i.Id">
+        <div class="comment-@i.Id">
             <div>
                 <div>
                     <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
@@ -155,10 +155,12 @@
         }   
         $(document).ready(function () {
             iLike();
+            const count = 0;
             $(".btn-outline-secondary").on("click", function (e) {
-                const id = $(e.currentTarget).attr("data-commentId");
-                window.alert(id);
-                $("#comment "+id).append("<textarea></textarea>");
+                if (count == 0) {
+                    const id = $(e.currentTarget).attr("data-commentId");
+                    $(".comment-" + id).append("<div><textarea>0</textarea></div>");
+                };
                     //< div class= 'form-group' > <div><label for='comment-textarea'>Comment</label></div> <div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile' />" + response.User.Identity.Name + "</div> <div><textarea class='form-control' id='comment-textarea' rows='3' placeholder='write a comment...'></textarea></div> <div><button data-articleId=" + response.Model.Article.Id + " id='submit-comment' type='button' class='btn btn-outline-primary btn-sm'>Submit</button></div></div > ");
             });
             $(".btn-outline-primary").on("click", function (e) {
