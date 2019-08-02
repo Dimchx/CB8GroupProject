@@ -257,7 +257,7 @@ html {
     width: 230px;
     height: 230px;
     background-color: blue;
-    margin: 25px;
+    margin: 35px;
 }
 
 #home-cards:hover {
@@ -269,4 +269,10 @@ html {
     flex-direction: row;
     width: 100%;
     flex-wrap: wrap;
+}
+
+#latest-articles {
+    text-align: center;
+    font-weight: bold;
+    font-size: 50px;
 }
