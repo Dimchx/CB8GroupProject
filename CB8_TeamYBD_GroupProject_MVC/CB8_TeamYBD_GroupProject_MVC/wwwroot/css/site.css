@@ -282,3 +282,7 @@ html {
     font-size: 50px;
 }
 
+#card-links{
+    color: white;
+    text-decoration: none;
+}
