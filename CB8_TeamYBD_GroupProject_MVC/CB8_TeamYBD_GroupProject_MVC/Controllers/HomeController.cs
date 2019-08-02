@@ -42,7 +42,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             {
                 userId = "";
             }
-            Article article = _context.Articles.Find(Id);
+            Article article = _context.Articles.Include("Author").First(x => x.Id == Id);
             CB8_TeamYBD_GroupProject_MVCUser author = article.Author;
             bool paywall = article.Paid;
             DateTime dateTime = article.PostDateTime;

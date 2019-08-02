@@ -286,3 +286,9 @@ html {
     color: white;
     text-decoration: none;
 }
+
+#article-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

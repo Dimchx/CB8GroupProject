@@ -10,9 +10,14 @@
 <script src="https://kit.fontawesome.com/e827195700.js"></script>
 
 <div class="card text-white bg-info mb-3" id="card-content">
-    <div class="card-header">
-    <h1 style="color:#FFF;">@Model.Article.Title</h1>
-    <time>@Model.ArticlePostDateTime</time>
+    <div class="card-header" id="article-header">
+        <div>
+            <h1 style="color:#FFF;">@Model.Article.Title</h1>
+            <time>@Model.ArticlePostDateTime</time>
+        </div>
+        <div>
+        <p id="information-author">@Model.Article.Author.UserName</p>
+        </div>
     </div>
 
     <div id="article-content" class="card-body">
@@ -42,33 +47,53 @@
     </div>
 </div>
 <div id="comments">
-@foreach(var i in Model.Comments)
-{
-        
-    <div>
+    @foreach (var i in Model.Comments)
+    {
         <div>
-            <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
-             @i.User.UserName
+            <div>
+                <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+                @i.User.UserName
+            </div>
+            <div>
+                @i.CommentDateTime
+            </div>
+            <div>
+                <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
+            </div>
+            <div id="multiple-buttons-comments">
+                <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x => x.Comment.Id == i.Id).Count()</span></button>
+                <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
+                @if (i.User.Id == Model.UserId)
+                {
+                    <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
+                    <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
+                }
+            </div>
         </div>
-        <div>
-            @i.CommentDateTime
-        </div>
-        <div>
-            <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
-        </div>
-        <div id="multiple-buttons-comments">
-            <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x=>x.Comment.Id==i.Id).Count()</span></button>
-            <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
-
-            @if (i.User.Id == Model.UserId)
-            {
-                <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
-                <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
-            }
-
-        </div>
-    </div>
-    
+        @foreach (var j in Model.Comments)
+        {
+            <div>
+                <div>
+                    <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+                    @i.User.UserName
+                </div>
+                <div>
+                    @i.CommentDateTime
+                </div>
+                <div>
+                    <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
+                </div>
+                <div id="multiple-buttons-comments">
+                    <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x => x.Comment.Id == i.Id).Count()</span></button>
+                    <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
+                    @if (i.User.Id == Model.UserId)
+                    {
+                        <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
+                        <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
+                    }
+                </div>
+            </div>
+        }
     }
 </div>
 <div class="form-group">
