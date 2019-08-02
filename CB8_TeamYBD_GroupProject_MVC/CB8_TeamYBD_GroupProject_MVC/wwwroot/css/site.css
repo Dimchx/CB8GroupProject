@@ -262,6 +262,10 @@ html {
 
 #home-cards:hover {
     cursor: pointer;
+    transition: transform .5s ease;
+    transform: scale(1.15);
+    border: groove;
+    border-color: #61dafb;
 }
 
 .home-container {
