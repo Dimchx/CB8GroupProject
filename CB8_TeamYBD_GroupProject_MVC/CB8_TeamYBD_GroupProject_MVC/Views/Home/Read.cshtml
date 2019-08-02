@@ -49,55 +49,57 @@
 <div id="comments">
     @foreach (var i in Model.Comments)
     {
-        <div>
-            <div>
-                <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
-                @i.User.UserName
-            </div>
-            <div>
-                @i.CommentDateTime
-            </div>
-            <div>
-                <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
-            </div>
-            <div id="multiple-buttons-comments">
-                <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x => x.Comment.Id == i.Id).Count()</span></button>
-                <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
-                @if (i.User.Id == Model.UserId)
-                {
-                    <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
-                    <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
-                }
-            </div>
-        </div>
-        @foreach (var j in Model.CommentResponses)
-        {
-            if (j.Comment == i)
-            {
+        <div id="comment @i.Id">
             <div>
                 <div>
                     <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
-                    @j.User.UserName
+                    @i.User.UserName
                 </div>
                 <div>
-                    @j.ResponseDateTime
+                    @i.CommentDateTime
                 </div>
                 <div>
-                    <textarea class="submitcomment form-control" rows="3" readonly>@j.Content</textarea>
+                    <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
                 </div>
                 <div id="multiple-buttons-comments">
-                    <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id"><!-->Model.CommentResponseLikes.Where(x => x.CommentResponse.Id == j.Id).Count()<-->0</span></button>
-                    <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
-                    @if (j.User.Id == Model.UserId)
+                    <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x => x.Comment.Id == i.Id).Count()</span></button>
+                    <button data-commentId="@i.Id" type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
+                    @if (i.User.Id == Model.UserId)
                     {
                         <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
                         <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
-        }
+                    }
                 </div>
             </div>
+            @foreach (var j in Model.CommentResponses)
+             {
+                if (j.Comment == i)
+                {
+                <div>
+                    <div>
+                        <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+                        @j.User.UserName
+                    </div>
+                    <div>
+                        @j.ResponseDateTime
+                    </div>
+                    <div>
+                        <textarea class="submitcomment form-control" rows="3" readonly>@j.Content</textarea>
+                    </div>
+                    <div id="multiple-buttons-comments">
+                        <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id"><!-->Model.CommentResponseLikes.Where(x => x.CommentResponse.Id == j.Id).Count()<-->0</span></button>
+                        <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
+                        @if (j.User.Id == Model.UserId)
+                        {
+                            <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
+                            <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
+                        }
+                    </div>
+                </div>
                 }
-            }
-        }
+             }
+        </div>
+     }
 </div>
 <div class="form-group">
     <div>
@@ -154,7 +156,10 @@
         $(document).ready(function () {
             iLike();
             $(".btn-outline-secondary").on("click", function (e) {
-                $("#comments").append("<div class='form-group'><div><label for='comment-textarea'>Comment</label></div><div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.User.Identity.Name + "</div><div><textarea class='form-control' id='comment-textarea' rows='3' placeholder='write a comment...'></textarea></div><div><button data-articleId=" + response.Model.Article.Id + " id='submit-comment' type='button' class='btn btn-outline-primary btn-sm'>Submit</button></div></div>");
+                const id = $(e.currentTarget).attr("data-commentId");
+                window.alert(id);
+                $("#comment "+id).append("<textarea></textarea>");
+                    //< div class= 'form-group' > <div><label for='comment-textarea'>Comment</label></div> <div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile' />" + response.User.Identity.Name + "</div> <div><textarea class='form-control' id='comment-textarea' rows='3' placeholder='write a comment...'></textarea></div> <div><button data-articleId=" + response.Model.Article.Id + " id='submit-comment' type='button' class='btn btn-outline-primary btn-sm'>Submit</button></div></div > ");
             });
             $(".btn-outline-primary").on("click", function (e) {
                 if ($("#comment-textarea").val() != "") {

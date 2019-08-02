@@ -26,14 +26,14 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CommentResponse>>> GetCommentResponse()
         {
-            return await _context.CommentResponse.ToListAsync();
+            return await _context.CommentResponses.ToListAsync();
         }
 
         // GET: api/CommentResponses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CommentResponse>> GetCommentResponse(int id)
         {
-            var commentResponse = await _context.CommentResponse.FindAsync(id);
+            var commentResponse = await _context.CommentResponses.FindAsync(id);
 
             if (commentResponse == null)
             {
@@ -84,7 +84,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             response.Comment = _context.Comments.Find(vm.CommentId);
             response.ResponseDateTime = DateTime.Now;
             response.Content = vm.Content;
-            _context.CommentResponse.Add(response);
+            _context.CommentResponses.Add(response);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCommentResponse", new { id = response.Id }, response);
@@ -94,13 +94,13 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<CommentResponse>> DeleteCommentResponse(int id)
         {
-            var commentResponse = await _context.CommentResponse.FindAsync(id);
+            var commentResponse = await _context.CommentResponses.FindAsync(id);
             if (commentResponse == null)
             {
                 return NotFound();
             }
 
-            _context.CommentResponse.Remove(commentResponse);
+            _context.CommentResponses.Remove(commentResponse);
             await _context.SaveChangesAsync();
 
             return commentResponse;
@@ -108,7 +108,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         private bool CommentResponseExists(int id)
         {
-            return _context.CommentResponse.Any(e => e.Id == id);
+            return _context.CommentResponses.Any(e => e.Id == id);
         }
     }
 }
