@@ -16,5 +16,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.ViewModels
         public List<ArticleLike> Likes { get; set; }
         public List<Comment> Comments { get; set; }
         public List<CommentLike> CommentLikes { get; set; }
+        public List<CommentResponse> CommentResponses { get; set;}
+        public List<CommentResponseLike> CommentResponseLikes { get; set; }
     }
 }

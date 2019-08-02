@@ -70,31 +70,34 @@
                 }
             </div>
         </div>
-        @foreach (var j in Model.Comments)
+        @foreach (var j in Model.CommentResponses)
         {
+            if (j.Comment == i)
+            {
             <div>
                 <div>
                     <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
-                    @i.User.UserName
+                    @j.User.UserName
                 </div>
                 <div>
-                    @i.CommentDateTime
+                    @j.ResponseDateTime
                 </div>
                 <div>
-                    <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
+                    <textarea class="submitcomment form-control" rows="3" readonly>@j.Content</textarea>
                 </div>
                 <div id="multiple-buttons-comments">
-                    <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x => x.Comment.Id == i.Id).Count()</span></button>
+                    <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id"><!-->Model.CommentResponseLikes.Where(x => x.CommentResponse.Id == j.Id).Count()<-->0</span></button>
                     <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
-                    @if (i.User.Id == Model.UserId)
+                    @if (j.User.Id == Model.UserId)
                     {
                         <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
                         <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
-                    }
+        }
                 </div>
             </div>
+                }
+            }
         }
-    }
 </div>
 <div class="form-group">
     <div>
