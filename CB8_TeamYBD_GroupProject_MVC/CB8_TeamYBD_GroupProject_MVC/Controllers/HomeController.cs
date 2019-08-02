@@ -24,7 +24,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         public IActionResult Index()
         {
-            List<Article> model = _context.Articles.Include("Author").ToList();
+            List<Article> model = _context.Articles.Include("Author").OrderByDescending(x=>x.PostDateTime).ToList();
             return View(model);
         }
 
