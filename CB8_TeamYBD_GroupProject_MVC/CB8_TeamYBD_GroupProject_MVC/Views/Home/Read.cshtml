@@ -119,7 +119,7 @@
         <textarea class="form-control" id="comment-textarea" rows="3" placeholder="write a comment..." ></textarea>
     </div>
     <div>
-        <button data-articleId="@Model.Article.Id" id="submit-comment" type="button" class="btn btn-outline-primary btn-sm">Submit</button>
+        <button data-articleId="@Model.Article.Id" id="submit-comment" type="button" class="btn btn-outline-primary btn-sm comment-submit">Submit</button>
     </div>
 
 </div>
@@ -187,7 +187,7 @@
                     });
                 };
             });
-            $(".btn-outline-primary").on("click", function (e) {
+            $(".comment-submit").on("click", function (e) {
                 if ($("#comment-textarea").val() != "") {
                     $.ajax({
                         method: 'POST',
