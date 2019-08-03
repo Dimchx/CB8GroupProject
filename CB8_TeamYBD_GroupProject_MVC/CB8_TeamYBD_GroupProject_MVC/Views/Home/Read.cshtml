@@ -87,8 +87,7 @@
                             <textarea class="form-control" id='reply-textarea' rows="2" readonly>@j.Content</textarea>
                         </div>
                         <div id="multiple-buttons-comments">
-                            <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id">0 </span></button> @{//Model.CommentResponseLikes.Where(x => x.CommentResponse.Id == j.Id).Count()
-            }
+                            <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id">0 </span></button> 
                             <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
                             @if (j.User.Id == Model.UserId)
                             {
@@ -105,6 +104,7 @@
             <textarea class='form-control reply-@i.Id' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea>
             <button data-commentId="@i.Id" type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Submit Reply</button>
         </div>
+
     }
 </div>
 <div class="form-group">
