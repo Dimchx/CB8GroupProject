@@ -300,3 +300,12 @@ html {
     background-color: powderblue;
     margin-bottom: 10px;
 }
+
+#submit-reply{
+    margin-left: 93px;
+    margin-bottom: 7px;
+}
+
+#submit-reply:hover{
+    color:white;
+}
