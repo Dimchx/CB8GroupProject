@@ -10,7 +10,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
     {
         public int Id { get; set; }
         public CB8_TeamYBD_GroupProject_MVCUser User { get; set; }
-        public CommentResponse Comment { get; set; }
+        public CommentResponse Response { get; set; }
         public DateTime LikeDateTime { get; set; }
     }
 }

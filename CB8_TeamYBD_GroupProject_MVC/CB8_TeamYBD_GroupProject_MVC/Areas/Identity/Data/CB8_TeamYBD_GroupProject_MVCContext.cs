@@ -33,5 +33,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
         public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.UserSubcription> UserSubcriptions { get; set; }
         public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.SubscriptionListing> SubscriptionListings { get; set; }
         public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.CommentResponse> CommentResponses { get; set; }
+        public DbSet<CB8_TeamYBD_GroupProject_MVC.Models.CommentResponseLike> CommentResponseLikes { get; set; }
     }
 }

@@ -48,8 +48,9 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             DateTime dateTime = article.PostDateTime;
             List<ArticleLike> likes = _context.ArticleLikes.Include("User").Where(x => x.Article == article).ToList();
             List<Comment> comments = _context.Comments.Include("User").Where(x => x.Article == article).OrderBy(x=>x.CommentDateTime).ToList();
-            List<CommentLike> commentLikes = _context.CommentLikes.Include("User").Include("Comment").Where(x => x.Comment.Article == article).OrderBy(x => x.LikeDateTime).ToList();
+            List<CommentLike> commentLikes = _context.CommentLikes.Include("User").Include("Comment").Where(x => x.Comment.Article == article).ToList();
             List<CommentResponse> commentResponses = _context.CommentResponses.Include("User").Include("Comment").Where(x => x.Comment.Article == article).OrderBy(x => x.ResponseDateTime).ToList();
+            List<CommentResponseLike> commentResponseLikes = _context.CommentResponseLikes.Include("User").Include("Response").Include(x=>x.Response.Comment).Where(x => x.Response.Comment.Article == article).ToList();
             ReadViewModel vm = new ReadViewModel() { UserId=userId, Article=article,Author=author,Likes=likes,Comments=comments,ArticlePostDateTime=dateTime, CommentLikes=commentLikes, CommentResponses=commentResponses };
             return View(vm);
         }
