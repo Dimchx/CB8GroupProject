@@ -244,7 +244,7 @@ html {
 }
 
 #multiple-buttons-comments{
-    margin-bottom: 35px;
+    margin-bottom: 10px;
 }
 
 .liketolike {
@@ -294,8 +294,9 @@ html {
 }
 
 #reply-textarea {
+    
     margin-left: 93px;
-    max-width: 94%;
+    max-width: 93%;
     background-color: powderblue;
     margin-bottom: 10px;
 }
