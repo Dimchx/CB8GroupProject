@@ -49,60 +49,63 @@
 <div id="comments">
     @foreach (var i in Model.Comments)
     {
-    <div class="comment-@i.Id">
-        <div>
+        <div class="comment-@i.Id">
             <div>
-                <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
-                @i.User.UserName
-            </div>
-            <div>
-                @i.CommentDateTime
-            </div>
-            <div>
-                <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
-            </div>
-            <div id="multiple-buttons-comments">
-                <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x => x.Comment.Id == i.Id).Count()</span></button>
-                <button data-commentId="@i.Id" type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
-                @if (i.User.Id == Model.UserId)
-                {
-                    <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
-                    <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
-                }
-            </div>
-        </div>
-        <div>
-            <textarea class='form-control' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea>
-        </div>
-        @foreach (var j in Model.CommentResponses)
-        {
-            if (j.Comment == i)
-            {
                 <div>
-                    <div>
-                        <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
-                        @j.User.UserName
-                    </div>
-                    <div>
-                        @j.ResponseDateTime
-                    </div>
-                    <div>
-                        <textarea class="submitcomment form-control" rows="3" readonly>@j.Content</textarea>
-                    </div>
-                    <div id="multiple-buttons-comments">
-                        <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id"><!-->Model.CommentResponseLikes.Where(x => x.CommentResponse.Id == j.Id).Count()<-->0</span></button>
-                        <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
-                        @if (j.User.Id == Model.UserId)
-                        {
-                            <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
-                            <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
-                        }
-                    </div>
+                    <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+                    @i.User.UserName
                 </div>
+                <div>
+                    @i.CommentDateTime
+                </div>
+                <div>
+                    <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
+                </div>
+                <div id="multiple-buttons-comments">
+                    <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x => x.Comment.Id == i.Id).Count()</span></button>
+                    @if (i.User.Id == Model.UserId)
+                    {
+                        <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
+                        <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
+                    }
+                </div>
+            </div>
+
+            @foreach (var j in Model.CommentResponses)
+            {
+                if (j.Comment == i)
+                {
+                    <div>
+                        <div>
+                            <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+                            @j.User.UserName
+                        </div>
+                        <div>
+                            @j.ResponseDateTime
+                        </div>
+                        <div>
+                            <textarea class="form-control" id='reply-textarea' rows="2" readonly>@j.Content</textarea>
+                        </div>
+                        <div id="multiple-buttons-comments">
+                            <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id">0 </span></button> @{//Model.CommentResponseLikes.Where(x => x.CommentResponse.Id == j.Id).Count()
             }
-        }
-    </div>
-     }
+                            <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
+                            @if (j.User.Id == Model.UserId)
+                            {
+                                <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
+                                <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+        <div>
+            <textarea class='form-control reply-@i.Id' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea>
+            <button data-commentId="@i.Id" type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Submit Reply</button>
+        </div>
+    }
 </div>
 <div class="form-group">
     <div>
@@ -158,8 +161,31 @@
         }   
         $(document).ready(function () {
             iLike();
-            const count = 0;
             $(".btn-outline-secondary").on("click", function (e) {
+                const comment = $(e.currentTarget).attr("data-commentId")
+                if ($(".reply-"+comment).val() != "") {
+                    $.ajax({
+                        method: 'POST',
+                        url: '/api/CommentResponses/',
+                        contentType: "application/json; charset=utf-8",
+                        accepts: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            commentId: $(e.currentTarget).attr("data-commentId"),
+                            content: $(".reply-"+comment).val()
+                        }),
+                        success: function (response) {
+                            console.log(response.id)
+                            console.log(response.content);
+                             $(".comment-"+comment).append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div>" + response.responseDateTime + "</div><textarea class='submitcomment form-control' id='reply-textarea' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-comments'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm'>Edit</button><button type='button' class='btn btn-outline-danger button-cmnt btn-sm'>Delete</button></div><div>");
+                            $(".reply-"+comment).val('');
+                        },
+                        error: function (response) {
+                            console.log("ERROR!!!!!!!!!!");
+                            console.log(response);
+                        }
+                    });
+                };
             });
             $(".btn-outline-primary").on("click", function (e) {
                 if ($("#comment-textarea").val() != "") {
