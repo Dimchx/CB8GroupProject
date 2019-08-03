@@ -292,3 +292,10 @@ html {
     flex-direction: row;
     justify-content: space-between;
 }
+
+#reply-textarea {
+    margin-left: 93px;
+    max-width: 94%;
+    background-color: powderblue;
+    margin-bottom: 10px;
+}

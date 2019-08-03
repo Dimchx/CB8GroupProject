@@ -159,7 +159,7 @@
             $(".btn-outline-secondary").on("click", function (e) {
                 if (count == 0) {
                     const id = $(e.currentTarget).attr("data-commentId");
-                    $(".comment-" + id).append("<div><textarea>0</textarea></div>");
+                    $(".comment-" + id).append("<div><textarea class='form-control' id='reply-textarea' rows='3' placeholder='write a reply...' ></textarea></div>");
                 };
                     //< div class= 'form-group' > <div><label for='comment-textarea'>Comment</label></div> <div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile' />" + response.User.Identity.Name + "</div> <div><textarea class='form-control' id='comment-textarea' rows='3' placeholder='write a comment...'></textarea></div> <div><button data-articleId=" + response.Model.Article.Id + " id='submit-comment' type='button' class='btn btn-outline-primary btn-sm'>Submit</button></div></div > ");
             });
