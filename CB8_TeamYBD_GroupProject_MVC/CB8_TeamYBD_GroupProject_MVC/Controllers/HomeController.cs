@@ -34,9 +34,11 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         public async Task<IActionResult> Read(int Id)
         {
             string userId;
+            CB8_TeamYBD_GroupProject_MVCUser user = new CB8_TeamYBD_GroupProject_MVCUser();
             try
             {
                 userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                user = _context.Users.Find(userId);
             }
             catch
             {
@@ -51,8 +53,33 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             List<CommentLike> commentLikes = _context.CommentLikes.Include("User").Include("Comment").Where(x => x.Comment.Article == article).ToList();
             List<CommentResponse> commentResponses = _context.CommentResponses.Include("User").Include("Comment").Where(x => x.Comment.Article == article).OrderBy(x => x.ResponseDateTime).ToList();
             List<CommentResponseLike> commentResponseLikes = _context.CommentResponseLikes.Include("User").Include("Response").Include(x=>x.Response.Comment).Where(x => x.Response.Comment.Article == article).ToList();
-            ReadViewModel vm = new ReadViewModel() { UserId=userId, Article=article,Author=author,Likes=likes,Comments=comments,ArticlePostDateTime=dateTime, CommentLikes=commentLikes, CommentResponses=commentResponses };
-            return View(vm);
+            if (paywall == false
+                    ||
+                (
+                    paywall == true 
+                        && 
+                    (
+                        user == author 
+                            || 
+                        user.Premium == true 
+                            || 
+                        (_context.ArticlePurchases.Where(x => x.Article == article && x.User == user).Count() > 0) 
+                            || 
+                        (_context.UserSubcriptions.Where(x => x.Subscriber == user && x.Subscription.User == author && x.EndDate.CompareTo(DateTime.Now) < 0).Count() > 0)
+                    )
+                 )
+               )
+            {
+                ReadViewModel vm = new ReadViewModel() { UserId = userId, Article = article, Author = author, Likes = likes, Comments = comments, ArticlePostDateTime = dateTime, CommentLikes = commentLikes, CommentResponses = commentResponses };
+                return View(vm);
+            }
+            else
+            {
+                article.Content = "<h5>This article is paid. Please register and purchase either this article, a subscription to the author, or a premium ReedMie account.</h5>";
+                ReadViewModel vm = new ReadViewModel() { UserId = userId, Article = article, Author = author, Likes = likes, Comments = comments, ArticlePostDateTime = dateTime, CommentLikes = commentLikes, CommentResponses = commentResponses };
+                return View(vm);
+            }
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
