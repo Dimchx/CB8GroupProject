@@ -87,7 +87,7 @@
                             <textarea class="form-control" id='reply-textarea' rows="2" readonly>@j.Content</textarea>
                         </div>
                         <div id="multiple-buttons-reply">
-                            <button data-replyId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id">0 </span></button> 
+                            <button data-replyId="@j.Id" type="button" class="comment-reply-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="replyid-@j.Id">@Model.CommentResponseLikes.Where(x=>x.Response==j).Count() </span></button> 
                             <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm reply-comment">Reply</button>
                             @if (j.User.Id == Model.UserId)
                             {
@@ -160,6 +160,40 @@
             });
         }
 
+        function iLikeReply() {
+            return $(".comment-reply-like").on("click", function (e) {
+                const id = $(e.currentTarget).attr("data-replyId");
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/CommentResponseLikes/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        commentresponseId: $(e.currentTarget).attr("data-replyId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            e.target.classList.add('liked')
+                            var num = +$("#replyid-" + id).text() + 1
+                            $("#replyid-" + id).text(num)
+                        }
+                        else {
+                            e.target.classList.remove('liked')
+                            var num = $("#replyid-" + id).text() - 1
+                            $("#replyid-" + id).text(num)
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });
+        }
+
         function iDelete() {
             return $(".delete-comment").on("click", function (e) {
                  const comment = $(e.currentTarget).attr("data-commentId");             
@@ -213,8 +247,9 @@
                         success: function (response) {
                             console.log(response.id)
                             console.log(response.content);
-                             $(".comment-"+comment).append("<div class='reply-"+response.id+"'><img id='img-reply' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div id='date-reply'>" + response.responseDateTime + "</div><textarea class='submitcomment form-control' id='reply-textarea' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-reply'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm edit-comment'>Edit</button><button type='button' data-replyId='"+response.id+"' class='btn btn-outline-danger button-cmnt btn-sm delete-comment delete-reply'>Delete</button></div><div>");
+                             $(".comment-"+comment).append("<div class='reply-"+response.id+"'><img id='img-reply' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div id='date-reply'>" + response.responseDateTime + "</div><textarea class='submitcomment form-control' id='reply-textarea' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-reply'> <button data-replyId=" + response.id + " type='button' class='comment-reply-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id='replyid-" + response.id + "'>0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm edit-comment'>Edit</button><button type='button' data-replyId='"+response.id+"' class='btn btn-outline-danger button-cmnt btn-sm delete-comment delete-reply'>Delete</button></div><div>");
                             iDeleteReply();
+                            iLikeReply();
                             $(".replytext-" + comment).val('');
                         },
                         error: function (response) {
@@ -230,6 +265,7 @@
             iDelete(); 
             iReply();
             iDeleteReply();
+            iLikeReply();
             $(".comment-submit").on("click", function (e) {
                 if ($("#comment-textarea").val() != "") {
                     $.ajax({
@@ -251,6 +287,7 @@
                             iDelete();
                             iReply();
                             iDeleteReply();
+                            iLikeReply();
                         },
                         error: function (response) {
                             console.log("ERROR!!!!!!!!!!");

@@ -52,7 +52,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             List<Comment> comments = _context.Comments.Include("User").Where(x => x.Article == article).OrderBy(x=>x.CommentDateTime).ToList();
             List<CommentLike> commentLikes = _context.CommentLikes.Include("User").Include("Comment").Where(x => x.Comment.Article == article).ToList();
             List<CommentResponse> commentResponses = _context.CommentResponses.Include("User").Include("Comment").Where(x => x.Comment.Article == article).OrderBy(x => x.ResponseDateTime).ToList();
-            List<CommentResponseLike> commentResponseLikes = _context.CommentResponseLikes.Include("User").Include("Response").Include(x=>x.Response.Comment).Where(x => x.Response.Comment.Article == article).ToList();
+            List<CommentResponseLike> commentResponseLikes = _context.CommentResponseLikes.Include(x=>x.Response.Comment).Where(x => x.Response.Comment.Article == article).ToList();
             if (paywall == false
                     ||
                 (
@@ -70,13 +70,13 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
                  )
                )
             {
-                ReadViewModel vm = new ReadViewModel() { UserId = userId, Article = article, Author = author, Likes = likes, Comments = comments, ArticlePostDateTime = dateTime, CommentLikes = commentLikes, CommentResponses = commentResponses };
+                ReadViewModel vm = new ReadViewModel() { UserId = userId, Article = article, Author = author, Likes = likes, Comments = comments, ArticlePostDateTime = dateTime, CommentLikes = commentLikes, CommentResponses = commentResponses, CommentResponseLikes=commentResponseLikes };
                 return View(vm);
             }
             else
             {
                 article.Content = "<h5>This article is paid. Please register and purchase either this article, a subscription to the author, or a premium ReedMie account.</h5>";
-                ReadViewModel vm = new ReadViewModel() { UserId = userId, Article = article, Author = author, Likes = likes, Comments = comments, ArticlePostDateTime = dateTime, CommentLikes = commentLikes, CommentResponses = commentResponses };
+                ReadViewModel vm = new ReadViewModel() { UserId = userId, Article = article, Author = author, Likes = likes, Comments = comments, ArticlePostDateTime = dateTime, CommentLikes = commentLikes, CommentResponses = commentResponses, CommentResponseLikes=commentResponseLikes };
                 return View(vm);
             }
             
