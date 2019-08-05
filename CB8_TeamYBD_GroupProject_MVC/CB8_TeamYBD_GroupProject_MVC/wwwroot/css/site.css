@@ -345,3 +345,35 @@ main {
 .edit-comment {
     margin-right: 5px;
 }
+
+#image-author {
+    width: 100%;
+    height: 100%;
+}
+
+
+.card-author {
+    height: 260px;
+}
+
+#author-cards {
+    display: flex;
+    flex-direction: column;
+    width: 198px;
+    height: 248px;
+    margin: 35px;
+    margin-bottom: 35px;
+    background: #605e5e !important
+}
+
+#author-cards:hover {
+    cursor: pointer;
+    transition: transform .5s ease;
+    transform: scale(1.15);
+    border: groove;
+    border-color: black;
+}
+
+.card-body-author{
+    background-color:grey;
+}
