@@ -100,7 +100,7 @@
             }
 
         </div>
-        <div class="reply-@i.Id">
+        <div class="replydiv-@i.Id">
             <textarea class='form-control reply-@i.Id' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea>
             <button data-commentId="@i.Id" type="button" class="btn btn-outline-primary btn-sm reply" id="submit-reply">Submit Reply</button>
         </div>
@@ -170,7 +170,7 @@
                             console.log(response.id)
                             console.log(response.content);
                             $(".comment-" + comment).remove();
-                            $(".reply-" + comment).remove();
+                            $(".replydiv-" + comment).remove();
                         },
                         error: function (response) {
                             console.log("ERROR!!!!!!!!!!");
