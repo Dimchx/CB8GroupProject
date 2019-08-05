@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using Stripe;
 
 namespace CB8_TeamYBD_GroupProject_MVC
 {
@@ -69,7 +70,7 @@ namespace CB8_TeamYBD_GroupProject_MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            StripeConfiguration.ApiKey = "sk_test_KfaWfNI6iOonYbpPzkffnx3j00qBzevKth";
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

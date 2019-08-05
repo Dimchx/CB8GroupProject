@@ -13,6 +13,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="2.2.3" />
+    <PackageReference Include="PayPal" Version="1.9.1" />
+    <PackageReference Include="Stripe.net" Version="27.21.0" />
   </ItemGroup>
 
 </Project>
