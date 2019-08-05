@@ -164,7 +164,11 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var article = await _context.Articles.FindAsync(id);
-            _context.Articles.Remove(article);
+            _context.ArticleLikes.RemoveRange(_context.ArticleLikes.Where(x => x.Article == article).ToList());
+            _context.CommentResponseLikes.RemoveRange(_context.CommentResponseLikes.Include(x => x.Response.Comment.Article).Where(x => x.Response.Comment.Article == article).ToList());
+            _context.CommentResponses.RemoveRange(_context.CommentResponses.Include(x => x.Comment).Where(x => x.Comment.Article == article).ToList());
+            _context.Comments.RemoveRange(_context.Comments.Where(x => x.Article == article).ToList());
+            _context.ArticlePurchases.RemoveRange(_context.ArticlePurchases.Where(x => x.Article == article));
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
