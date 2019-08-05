@@ -251,13 +251,13 @@ html {
     margin-left: 10px;
 }
 
-#home-cards  {
+#card-links > #home-cards {
     display: flex;
     flex-direction: column;
-    width: 230px;
-    height: 230px;
-    background-color: blue;
+    width: 350px;
+    height: 350px;
     margin: 35px;
+    background: #2a85b7 !important;
 }
 
 #home-cards:hover {
@@ -308,4 +308,24 @@ html {
 
 #submit-reply:hover{
     color:white;
+}
+
+main {
+    background-color: lightcyan;
+}
+
+#img-reply {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    margin-left: 92px;
+}
+
+#multiple-buttons-reply {
+    margin-bottom: 10px;
+    margin-left: 92px;
+}
+
+#date-reply {
+    margin-left: 92px;
 }

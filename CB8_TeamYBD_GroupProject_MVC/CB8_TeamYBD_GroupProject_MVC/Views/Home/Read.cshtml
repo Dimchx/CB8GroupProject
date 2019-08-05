@@ -77,16 +77,16 @@
                 {
                     <div>
                         <div>
-                            <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+                            <img id="img-reply" src="~/css/no-profile-image.png" alt="img profile" />
                             @j.User.UserName
                         </div>
-                        <div>
+                        <div id="date-reply">
                             @j.ResponseDateTime
                         </div>
                         <div>
                             <textarea class="form-control" id='reply-textarea' rows="2" readonly>@j.Content</textarea>
                         </div>
-                        <div id="multiple-buttons-comments">
+                        <div id="multiple-buttons-reply">
                             <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id">0 </span></button> 
                             <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm">Reply</button>
                             @if (j.User.Id == Model.UserId)
@@ -177,7 +177,7 @@
                         success: function (response) {
                             console.log(response.id)
                             console.log(response.content);
-                             $(".comment-"+comment).append("<div><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div>" + response.responseDateTime + "</div><textarea class='submitcomment form-control' id='reply-textarea' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-comments'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm'>Edit</button><button type='button' class='btn btn-outline-danger button-cmnt btn-sm'>Delete</button></div><div>");
+                             $(".comment-"+comment).append("<div><img id='img-reply' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div id='date-reply'>" + response.responseDateTime + "</div><textarea class='submitcomment form-control' id='reply-textarea' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-reply'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm'>Edit</button><button type='button' class='btn btn-outline-danger button-cmnt btn-sm'>Delete</button></div><div>");
                             $(".reply-"+comment).val('');
                         },
                         error: function (response) {
