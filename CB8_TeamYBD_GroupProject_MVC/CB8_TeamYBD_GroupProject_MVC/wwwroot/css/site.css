@@ -329,3 +329,19 @@ main {
 #date-reply {
     margin-left: 92px;
 }
+
+.reply-comment {
+    margin-right: 5px;
+}
+
+.delete-comment {
+    margin-right: 5px;
+}
+
+.comment-like {
+    margin-right: 5px;
+}
+
+.edit-comment {
+    margin-right: 5px;
+}
