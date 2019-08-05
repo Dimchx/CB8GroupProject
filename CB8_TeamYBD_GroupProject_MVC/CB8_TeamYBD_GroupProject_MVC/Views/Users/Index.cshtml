@@ -1,0 +1,13 @@
+﻿@model  IEnumerable<CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data.CB8_TeamYBD_GroupProject_MVCUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+@foreach (var i in Model)
+{
+    <div><h4>@i.UserName</h4></div>
+    <div><h3>@i.Id</h3></div>
+}

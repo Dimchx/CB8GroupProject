@@ -65,7 +65,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
                             || 
                         (_context.ArticlePurchases.Where(x => x.Article == article && x.User == user).Count() > 0) 
                             || 
-                        (_context.UserSubcriptions.Where(x => x.Subscriber == user && x.Subscription.User == author && x.EndDate.CompareTo(DateTime.Now) < 0).Count() > 0)
+                        (_context.UserSubcriptions.Where(x => x.Subscriber == user && x.Subscription.User == author && x.EndDate.CompareTo(DateTime.Now) > 0).Count() > 0)
                     )
                  )
                )

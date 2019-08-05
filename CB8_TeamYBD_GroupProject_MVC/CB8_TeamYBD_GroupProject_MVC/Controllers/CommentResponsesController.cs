@@ -95,6 +95,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         public async Task<ActionResult<CommentResponse>> DeleteCommentResponse(int id)
         {
             var commentResponse = await _context.CommentResponses.FindAsync(id);
+            _context.CommentResponseLikes.RemoveRange(_context.CommentResponseLikes.Where(x => x.Response == commentResponse).ToList());
             if (commentResponse == null)
             {
                 return NotFound();
