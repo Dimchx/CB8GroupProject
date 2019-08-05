@@ -257,7 +257,7 @@ html {
     width: 350px;
     height: 350px;
     margin: 35px;
-    background: #2a85b7 !important;
+    background: #748995 !important
 }
 
 #home-cards:hover {
@@ -311,7 +311,7 @@ html {
 }
 
 main {
-    background-color: lightcyan;
+    background-color: #e6e0c8;
 }
 
 #img-reply {
