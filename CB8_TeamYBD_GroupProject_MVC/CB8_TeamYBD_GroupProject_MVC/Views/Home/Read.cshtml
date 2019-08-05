@@ -75,7 +75,7 @@
             {
                 if (j.Comment == i)
                 {
-                    <div>
+                    <div class="reply-@j.Id">
                         <div>
                             <img id="img-reply" src="~/css/no-profile-image.png" alt="img profile" />
                             @j.User.UserName
@@ -87,12 +87,12 @@
                             <textarea class="form-control" id='reply-textarea' rows="2" readonly>@j.Content</textarea>
                         </div>
                         <div id="multiple-buttons-reply">
-                            <button data-commentId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id">0 </span></button> 
+                            <button data-replyId="@j.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@j.Id">0 </span></button> 
                             <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm reply-comment">Reply</button>
                             @if (j.User.Id == Model.UserId)
                             {
                                 <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
-                                <button type="button" class="btn btn-outline-danger button-cmnt btn-sm">Delete</button>
+                                <button data-replyId="@j.Id" type="button" class="btn btn-outline-danger button-cmnt btn-sm delete-reply">Delete</button>
                             }
                         </div>
                     </div>
@@ -101,7 +101,7 @@
 
         </div>
         <div class="replydiv-@i.Id">
-            <textarea class='form-control reply-@i.Id' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea>
+            <textarea class='form-control replytext-@i.Id' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea>
             <button data-commentId="@i.Id" type="button" class="btn btn-outline-primary btn-sm reply" id="submit-reply">Submit Reply</button>
         </div>
 
@@ -158,10 +158,10 @@
                     }
                 });
             });
-        }   
-        $(document).ready(function () {
-            iLike();
-             $(".delete-comment").on("click", function (e) {
+        }
+
+        function iDelete() {
+            return $(".delete-comment").on("click", function (e) {
                  const comment = $(e.currentTarget).attr("data-commentId");             
                     $.ajax({
                         method: 'DELETE',
@@ -178,9 +178,28 @@
                         }
                     });
             });
-            $(".reply").on("click", function (e) {
+        }  
+        function iDeleteReply() {
+            return $(".delete-reply").on("click", function (e) {
+                 const reply = $(e.currentTarget).attr("data-replyId");             
+                    $.ajax({
+                        method: 'DELETE',
+                        url: '/api/CommentResponses/' + reply,
+                        success: function (response) {
+                            $(".reply-" + reply).remove();
+                        },
+                        error: function (response) {
+                            console.log("ERROR!!!!!!!!!!");
+                            console.log(response);
+                        }
+                    });
+            });
+        }  
+
+        function iReply() {
+           return $(".reply").on("click", function (e) {
                 const comment = $(e.currentTarget).attr("data-commentId")
-                if ($(".reply-"+comment).val() != "") {
+                if ($(".replytext-"+comment).val() != "") {
                     $.ajax({
                         method: 'POST',
                         url: '/api/CommentResponses/',
@@ -189,13 +208,14 @@
                         dataType: 'json',
                         data: JSON.stringify({
                             commentId: $(e.currentTarget).attr("data-commentId"),
-                            content: $(".reply-"+comment).val()
+                            content: $(".replytext-"+comment).val()
                         }),
                         success: function (response) {
                             console.log(response.id)
                             console.log(response.content);
-                             $(".comment-"+comment).append("<div><img id='img-reply' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div id='date-reply'>" + response.responseDateTime + "</div><textarea class='submitcomment form-control' id='reply-textarea' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-reply'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm'>Edit</button><button type='button' class='btn btn-outline-danger button-cmnt btn-sm'>Delete</button></div><div>");
-                            $(".reply-"+comment).val('');
+                             $(".comment-"+comment).append("<div class='reply-"+response.id+"'><img id='img-reply' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div id='date-reply'>" + response.responseDateTime + "</div><textarea class='submitcomment form-control' id='reply-textarea' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-reply'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm edit-comment'>Edit</button><button type='button' data-replyId='"+response.id+"' class='btn btn-outline-danger button-cmnt btn-sm delete-comment delete-reply'>Delete</button></div><div>");
+                            iDeleteReply();
+                            $(".replytext-" + comment).val('');
                         },
                         error: function (response) {
                             console.log("ERROR!!!!!!!!!!");
@@ -204,6 +224,12 @@
                     });
                 };
             });
+        }
+        $(document).ready(function () {
+            iLike();
+            iDelete(); 
+            iReply();
+            iDeleteReply();
             $(".comment-submit").on("click", function (e) {
                 if ($("#comment-textarea").val() != "") {
                     $.ajax({
@@ -219,9 +245,12 @@
                         success: function (response) {
                             console.log(response.id)
                             console.log(response.content);
-                            $("#comments").append("<div class='comment-"+response.id+"'><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div>" + response.commentDateTime + "</div><textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-comments'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-secondary button-cmnt btn-sm reply-comment'>Reply</button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm reply-comment'>Edit</button><button data-commentId=" + response.id + " type='button' class='btn btn-outline-danger button-cmnt btn-sm delete-comment'>Delete</button></div><div>");
+                            $("#comments").append("<div class='comment-"+response.id+"'><img id='img-comment' src='~/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div>" + response.commentDateTime + "</div><textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-comments'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm reply-comment'>Edit</button><button data-commentId=" + response.id + " type='button' class='btn btn-outline-danger button-cmnt btn-sm delete-comment'>Delete</button></div><div><div class'replydiv-'"+response.id+"'><textarea class='form-control reply-"+response.id+"' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea><button data-commentId='"+response.id+"' type='button' class='btn btn-outline-primary btn-sm reply' id='submit-reply'>Submit Reply</button></div>");
                             $("#comment-textarea").val('');
                             iLike();
+                            iDelete();
+                            iReply();
+                            iDeleteReply();
                         },
                         error: function (response) {
                             console.log("ERROR!!!!!!!!!!");
