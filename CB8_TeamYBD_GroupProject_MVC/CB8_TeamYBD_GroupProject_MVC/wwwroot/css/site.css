@@ -422,3 +422,10 @@ main {
     height: auto;
     align-self: center;
 }
+
+.follow-counter {
+    font-size: 150%;
+    color: #f4f4f4;
+    background-color: #0f0f0f;
+    margin-left: 10px;
+}
