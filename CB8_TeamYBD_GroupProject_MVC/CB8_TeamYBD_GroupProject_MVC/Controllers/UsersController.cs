@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CB8_TeamYBD_GroupProject_MVC.Models;
 using CB8_TeamYBD_GroupProject_MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -23,10 +25,11 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         public IActionResult Details(string id)
         {
             var user = _context.Users.Find(id);
+            var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<Article> articles = _context.Articles.Where(x => x.Author == user).ToList();
             List<SubscriptionListing> listings = _context.SubscriptionListings.Where(x => x.User == user).ToList();
-            List<Follow> follows = _context.Follows.Where(x => x.User == user).ToList();
-            UserViewModel vm = new UserViewModel() { User = user, Articles = articles, Listings = listings, Follows=follows };
+            List<Follow> follows = _context.Follows.Include(x => x.Follower).Where(x => x.User == user).ToList();
+            UserViewModel vm = new UserViewModel() {UserId=userid, User = user, Articles = articles, Listings = listings, Follows=follows };
             return View(vm);
 
         }
