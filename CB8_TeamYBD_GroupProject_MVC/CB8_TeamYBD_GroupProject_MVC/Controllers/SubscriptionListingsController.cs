@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using System.Security.Claims;
+using CB8_TeamYBD_GroupProject_MVC.ViewModels;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -53,15 +55,20 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Price,DayDuration,MonthDuration")] SubscriptionListing subscriptionListing)
+        public async Task<IActionResult> Create([Bind("Id,Title,Price,DayDuration,MonthDuration")] SubscriptionListingViewModel vm)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            vm.User = user;
+            SubscriptionListing listing = (SubscriptionListing)vm;
             if (ModelState.IsValid)
             {
-                _context.Add(subscriptionListing);
+
+                _context.Add(listing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(subscriptionListing);
+            return View(vm);
         }
 
         // GET: SubscriptionListings/Edit/5
