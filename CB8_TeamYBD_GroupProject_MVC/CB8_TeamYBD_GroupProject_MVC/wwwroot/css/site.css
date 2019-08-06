@@ -428,3 +428,20 @@ main {
     background-color: #0f0f0f;
     margin-left: 10px;
 }
+
+#author-articles {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 250px;
+    margin: 35px;
+    background: #748995 !important
+}
+
+#author-articles:hover {
+    cursor: pointer;
+    transition: transform .5s ease;
+    transform: scale(1.15);
+    border: groove;
+    border-color: #61dafb;
+}

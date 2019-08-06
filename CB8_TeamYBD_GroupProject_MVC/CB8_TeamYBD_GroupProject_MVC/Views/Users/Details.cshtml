@@ -33,6 +33,51 @@
     </button>
 </div>
 
+<h2 style=" margin-top:10px; margin-bottom: 10px;">Articles</h2>
+
+<div class="home-container">
+    
+
+    @foreach (var i in Model.Articles)
+    {
+        var a = string.Concat(i.Content.Trim().Take(300).ToArray());
+        <a href="/home/read/@i.Id" id="card-links">
+            <div id="author-articles" class="card text-white bg-info  mb-3">
+                <div class="card-header article-info">
+                    @i.Title
+                    @if (i.Paid == true)
+                    {
+                        <i class="fas fa-lock"></i>
+                    }
+                </div>
+                <div class="card-body">
+                    <p id="text-cards-home">@Html.Raw(a) (...)</p>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+<h2>Listings</h2>
+
+<div class="home-container">
+    @foreach (var i in Model.Listings)
+    {
+        <a href="#" id="card-links">
+            <div id="author-articles" class="card text-white bg-info  mb-3">
+                <div class="card-header article-info">
+                    @i.Title
+                </div>
+                <div class="card-body">
+                    <p>&euro; @i.Price / @i.MonthDuration months @i.DayDuration days</p>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+
+
 
 @section scripts {
     <script>

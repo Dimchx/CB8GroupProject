@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data;
 using CB8_TeamYBD_GroupProject_MVC.Models;
 using CB8_TeamYBD_GroupProject_MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +25,9 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         }
         public IActionResult Details(string id)
         {
-            var user = _context.Users.Find(id);
+            var profile = _context.Users.Find(id);
             string userid;
+            CB8_TeamYBD_GroupProject_MVCUser user = new CB8_TeamYBD_GroupProject_MVCUser();
             try
             {
                 userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -35,9 +37,9 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             {
                 userid = "";
             }
-            List<Article> articles = _context.Articles.Where(x => x.Author == user).ToList();
-            List<SubscriptionListing> listings = _context.SubscriptionListings.Where(x => x.User == user).ToList();
-            List<Follow> follows = _context.Follows.Include(x => x.Follower).Where(x => x.User == user).ToList();
+            List<Article> articles = _context.Articles.Where(x => x.Author == profile).ToList();
+            List<SubscriptionListing> listings = _context.SubscriptionListings.Where(x => x.User == profile).ToList();
+            List<Follow> follows = _context.Follows.Include(x => x.Follower).Where(x => x.User == profile).ToList();
             UserViewModel vm = new UserViewModel() {UserId=userid, User = user, Articles = articles, Listings = listings, Follows=follows };
             return View(vm);
 
