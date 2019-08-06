@@ -387,3 +387,6 @@ main {
 .fa-lock{
     color: gold !important;
 }
+#file:hover {
+    color: #61dafb !important;
+}
