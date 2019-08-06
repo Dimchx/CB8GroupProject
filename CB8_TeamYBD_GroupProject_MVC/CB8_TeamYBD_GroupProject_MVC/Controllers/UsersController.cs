@@ -40,7 +40,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             List<Article> articles = _context.Articles.Where(x => x.Author == profile).ToList();
             List<SubscriptionListing> listings = _context.SubscriptionListings.Where(x => x.User == profile).ToList();
             List<Follow> follows = _context.Follows.Include(x => x.Follower).Where(x => x.User == profile).ToList();
-            UserViewModel vm = new UserViewModel() {UserId=userid, User = user, Articles = articles, Listings = listings, Follows=follows };
+            UserViewModel vm = new UserViewModel() {UserId=userid, User = profile, Articles = articles, Listings = listings, Follows=follows };
             return View(vm);
 
         }
