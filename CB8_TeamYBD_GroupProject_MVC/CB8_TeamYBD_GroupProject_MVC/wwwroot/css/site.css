@@ -378,6 +378,15 @@ main {
     background-color:grey;
 }
 
+.article-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.fa-lock{
+    color: gold !important;
+}
 #file:hover {
     color: #61dafb !important;
 }
