@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CB8_TeamYBD_GroupProject_MVC.Models;
+using System.Security.Claims;
+using CB8_TeamYBD_GroupProject_MVC.ViewModels;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 {
@@ -73,9 +75,23 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         // POST: api/Follows
         [HttpPost]
-        public async Task<ActionResult<Follow>> PostFollow(Follow follow)
+        public async Task<ActionResult<Follow>> PostFollow(FollowViewModel vm)
         {
-            _context.Follows.Add(follow);
+            Follow follow = new Follow();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _context.Users.Find(userId);
+            follow.Follower = user;
+            follow.User = _context.Users.Find(vm.UserId);
+            follow.DateTime = DateTime.Now;
+            if (_context.Follows.Where(x => x.Follower == user && x.User == follow.User).Count() == 0)
+            {
+
+                _context.Follows.Add(follow);
+            }
+            else
+            {
+                _context.Follows.RemoveRange(_context.Follows.Where(x => x.Follower == user && x.User == follow.User).ToList());
+            }
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetFollow", new { id = follow.Id }, follow);

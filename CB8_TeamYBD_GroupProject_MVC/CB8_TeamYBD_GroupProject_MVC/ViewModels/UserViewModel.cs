@@ -11,6 +11,6 @@ namespace CB8_TeamYBD_GroupProject_MVC.ViewModels
     {
         public CB8_TeamYBD_GroupProject_MVCUser User { get; set; }
         public List<Article> Articles { get; set; }
-        public List<SubscriptionListing> listings { get; set; }
+        public List<SubscriptionListing> Listings { get; set; }
     }
 }
