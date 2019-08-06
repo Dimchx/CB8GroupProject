@@ -9,6 +9,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.ViewModels
 {
     public class UserViewModel
     {
+        public string UserId { get; set; }
         public CB8_TeamYBD_GroupProject_MVCUser User { get; set; }
         public List<Article> Articles { get; set; }
         public List<SubscriptionListing> Listings { get; set; }

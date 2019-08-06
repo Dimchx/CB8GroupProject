@@ -9,7 +9,28 @@
 <div class="detail-content">
     <img class="detail-img" src="~/css/no-profile-image.png" />
     <h3 class="detail-name">@Model.User.UserName</h3>
-    <button type="button" data-userId="@Model.User.Id" class="btn btn-outline-secondary btn-sm follow-button"><i class="fas fa-user-plus fa-2x">Follow</i><span class="follow-counter badge badge-pill badge-info" id="follows-count">@Model.Follows.Count()</span></button>
+    <button type="button" class="btn btn-outline-secondary btn-sm follow-button">
+
+        @{
+            bool present = false;
+            foreach (var i in Model.Follows)
+            {
+                if (i.Follower.Id == Model.UserId)
+                {
+                    present = true;
+                }
+            }
+            if (present == true)
+            {
+                <i data-userId="@Model.User.Id" class="fas fa-user-plus fa-2x liked">Follow</i>
+            }
+            else
+            {
+                <i data-articleId="@Model.User.Id" class="far fa-smile-wink fa-2x">Follow</i>
+            }
+        }
+       <span class="follow-counter badge badge-pill badge-info" id="follows-count">@Model.Follows.Count()</span>
+    </button>
 </div>
 
 
