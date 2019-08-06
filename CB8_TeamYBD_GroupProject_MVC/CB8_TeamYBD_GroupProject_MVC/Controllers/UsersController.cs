@@ -25,7 +25,16 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
         public IActionResult Details(string id)
         {
             var user = _context.Users.Find(id);
-            var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string userid;
+            try
+            {
+                userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                user = _context.Users.Find(userid);
+            }
+            catch
+            {
+                userid = "";
+            }
             List<Article> articles = _context.Articles.Where(x => x.Author == user).ToList();
             List<SubscriptionListing> listings = _context.SubscriptionListings.Where(x => x.User == user).ToList();
             List<Follow> follows = _context.Follows.Include(x => x.Follower).Where(x => x.User == user).ToList();
