@@ -25,7 +25,8 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             var user = _context.Users.Find(id);
             List<Article> articles = _context.Articles.Where(x => x.Author == user).ToList();
             List<SubscriptionListing> listings = _context.SubscriptionListings.Where(x => x.User == user).ToList();
-            UserViewModel vm = new UserViewModel() { User = user, Articles = articles, Listings = listings };
+            List<Follow> follows = _context.Follows.Where(x => x.User == user).ToList();
+            UserViewModel vm = new UserViewModel() { User = user, Articles = articles, Listings = listings, Follows=follows };
             return View(vm);
 
         }
