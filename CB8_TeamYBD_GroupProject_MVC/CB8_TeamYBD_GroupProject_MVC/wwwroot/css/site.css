@@ -445,3 +445,7 @@ main {
     border: groove;
     border-color: #61dafb;
 }
+
+.listing-promo {
+    font-size: xx-large;
+}

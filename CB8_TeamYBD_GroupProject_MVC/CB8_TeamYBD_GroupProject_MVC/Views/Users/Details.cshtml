@@ -64,12 +64,12 @@
     @foreach (var i in Model.Listings)
     {
         <a href="#" id="card-links">
-            <div id="author-articles" class="card text-white bg-info  mb-3">
+            <div id="author-articles" class="card text-white bg-info  mb-3 listing-promo">
                 <div class="card-header article-info">
                     @i.Title
                 </div>
                 <div class="card-body">
-                    <p>&euro; @i.Price / @i.MonthDuration months @i.DayDuration days</p>
+                    <p>&euro; @i.Price <br /> <span style="font-size:medium;">for</span><br /> @i.MonthDuration <span style="font-size: medium;">months</span> @i.DayDuration <span style="font-size:medium;">days</span></p>
                 </div>
             </div>
         </a>

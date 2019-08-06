@@ -10,6 +10,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.ViewModels
     public class SubscriptionListingViewModel
     {
         public int Id { get; set; }
+        
         public CB8_TeamYBD_GroupProject_MVCUser User { get; set; }
         [Required]
         public string Title { get; set; }

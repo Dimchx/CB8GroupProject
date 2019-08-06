@@ -23,7 +23,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Models
 
         public static explicit operator SubscriptionListing(SubscriptionListingViewModel v)
         {
-            return new SubscriptionListing() { User=v.User, Title=v.Title, Price=v.Price,DayDuration=v.DayDuration,MonthDuration=v.MonthDuration}
+            return new SubscriptionListing() { User = v.User, Title = v.Title, Price = v.Price, DayDuration = v.DayDuration, MonthDuration = v.MonthDuration };
         }
     }
 }

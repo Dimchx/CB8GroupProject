@@ -4,14 +4,16 @@ using CB8_TeamYBD_GroupProject_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Migrations
 {
     [DbContext(typeof(CB8_TeamYBD_GroupProject_MVCContext))]
-    partial class CB8_TeamYBD_GroupProject_MVCContextModelSnapshot : ModelSnapshot
+    [Migration("20190806124225_subscription2")]
+    partial class subscription2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,8 +287,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
@@ -532,8 +533,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Migrations
                 {
                     b.HasOne("CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data.CB8_TeamYBD_GroupProject_MVCUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("CB8_TeamYBD_GroupProject_MVC.Models.UserSubcription", b =>

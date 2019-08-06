@@ -4,14 +4,16 @@ using CB8_TeamYBD_GroupProject_MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CB8_TeamYBD_GroupProject_MVC.Migrations
 {
     [DbContext(typeof(CB8_TeamYBD_GroupProject_MVCContext))]
-    partial class CB8_TeamYBD_GroupProject_MVCContextModelSnapshot : ModelSnapshot
+    [Migration("20190806124020_subscription")]
+    partial class subscription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
