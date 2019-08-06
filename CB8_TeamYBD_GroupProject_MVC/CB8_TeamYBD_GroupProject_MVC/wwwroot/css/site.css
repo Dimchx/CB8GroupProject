@@ -377,3 +377,7 @@ main {
 .card-body-author{
     background-color:grey;
 }
+
+#file:hover {
+    color: #61dafb !important;
+}

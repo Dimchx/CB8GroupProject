@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CB8_TeamYBD_GroupProject_MVC</title>
-
+    <script src="https://kit.fontawesome.com/e827195700.js"></script>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     </environment>
@@ -13,11 +13,11 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/_bootswatch.scss" />
     <link rel="stylesheet" href="~/css/_variables.scss" />
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/site.css" />
     @RenderSection("Header", required: false)
 </head>
 <body>
@@ -30,9 +30,6 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Home">Content</a>
                     </li>
@@ -61,27 +58,43 @@
                     <h5 class="card-title">My Profile</h5>
                     <h5 class="username-card">@User.Identity.Name</h5>
                     <h6 class="card-subtitle text-muted"></h6>
+
+                    @*Hiding the file-upload button from HTML & replacing it with a text (or icon) link *@
+                    <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
+                    @*Creating a label for the file-input field*@
+                    <p>
+                        <label id="file" for="file" style="cursor: pointer; color: dodgerblue;">
+                            Click me  
+                            <span id="file" style="font-size: 45px; color: dodgerblue;"><i class="fas fa-user-tag"></i></span>
+                              to UPload &#64;v&#64;t&#64;r!
+                        </label>
+                    </p>
+                    @*adding an HTML <img> element so as to be able to display the uploaded image*@
+                    <p><img id="output" width="160" /></p>
+
                 </div>
-                <img id="profile-img" src="~/css/no-profile-image.png" alt="profile image">
+
+                @*<img id="profile-img" src="~/css/no-profile-image.png" alt="profile image">*@
+
                 <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text">Some quick example text you would like to share with the community!..</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a href="/Articles">My Content</a></li>
                     <li class="list-group-item"><a href="#">My Favourite People</a></li>
                     <li class="list-group-item"><a href="#">My Subscriptions</a></li>
                 </ul>
-                </div>
-                <partial name="_CookieConsentPartial" />
-                <main role="main" class="p-3" style="flex:1 0 0">
-                    @RenderBody()
-                </main>
             </div>
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="p-3" style="flex:1 0 0">
+                @RenderBody()
+            </main>
+        </div>
 
-        
+
 
     </header>
-    
+
 
     <footer class="border-top footer text-muted position-fixed">
         <div class="container">
@@ -108,6 +121,14 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    <script>    @*Javascript-block to display the -here, above in this code- uploaded @v@t@r image*@
+        let loadFile = function (event) {
+            let image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>
