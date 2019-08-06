@@ -9,7 +9,7 @@
 <div class="detail-content">
     <img class="detail-img" src="~/css/no-profile-image.png" />
     <h3 class="detail-name">@Model.User.UserName</h3>
-    <button type="button" class="btn btn-outline-secondary btn-sm follow-button">
+    <button data-userId="@Model.User.Id" type="button" class="btn btn-outline-secondary btn-sm follow-button">
 
         @{
             bool present = false;
@@ -22,11 +22,11 @@
             }
             if (present == true)
             {
-                <i data-userId="@Model.User.Id" class="fas fa-user-plus fa-2x liked">Follow</i>
+                <i  class="fas fa-user-plus fa-2x liked">Follow</i>
             }
             else
             {
-                <i data-articleId="@Model.User.Id" class="fas fa-user-plus fa-2x">Follow</i>
+                <i  class="fas fa-user-plus fa-2x">Follow</i>
             }
         }
        <span class="follow-counter badge badge-pill badge-info" id="follows-count">@Model.Follows.Count()</span>
@@ -37,7 +37,7 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-            $(".fa-user-plus").on("click", function (e) {
+            $(".follow-button").on("click", function (e) {
                 $.ajax({
                     method: 'POST',
                     url: '/api/Follows/',
@@ -51,12 +51,12 @@
                         console.log("SUCCESS!");
                         console.log(response);
                         if (response.id != 0) {
-                            e.target.classList.add('liked')
+                            $(".fa-2x").add('liked')
                             var num = +$("#follows-count").text() + 1
                             $("#follows-count").text(num)
                         }
                         else {
-                            e.target.classList.remove('liked')
+                            $(."fa-2x").remove('liked')
                             var num = $("#follows-count").text() - 1
                             $("#follows-count").text(num)
                         }
