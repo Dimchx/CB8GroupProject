@@ -1,4 +1,4 @@
-﻿@model  CB8_TeamYBD_GroupProject_MVC.ViewModels.UserViewModel
+﻿@model CB8_TeamYBD_GroupProject_MVC.ViewModels.UserViewModel
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,10 +6,46 @@
 
 <h1>Details</h1>
 
-<div class="detail-content">    
+<div class="detail-content">
     <img class="detail-img" src="~/css/no-profile-image.png" />
     <h3 class="detail-name">@Model.User.UserName</h3>
-    <button type="button" class="btn btn-outline-secondary btn-sm follow-button"><i class="fas fa-user-plus fa-2x">Follow</i></button>
+    <button type="button" data-userId="@Model.User.Id" class="btn btn-outline-secondary btn-sm follow-button"><i class="fas fa-user-plus fa-2x">Follow</i><span class="follow-counter badge badge-pill badge-info" id="follows-count">@Model.Follows.Count()</span></button>
 </div>
 
 
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".fa-user-plus").on("click", function (e) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/Follows/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        userId: $(e.currentTarget).attr("data-userId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            e.target.classList.add('liked')
+                            var num = +$("#follows-count").text() + 1
+                            $("#follows-count").text(num)
+                        }
+                        else {
+                            e.target.classList.remove('liked')
+                            var num = $("#follows-count").text() - 1
+                            $("#follows-count").text(num)
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+}
