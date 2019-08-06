@@ -75,7 +75,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             }
             else
             {
-                article.Content = "<h5>This article is paid. Please register and purchase either this article, a subscription to the author, or a premium ReedMie account.</h5>";
+                article.Content = "<h5 style='color: white;'>This article is paid. Please login/register and purchase either this article, a subscription to the author, or a premium ReedMie account.</h5>";
                 ReadViewModel vm = new ReadViewModel() { UserId = userId, Article = article, Author = author, Likes = likes, Comments = comments, ArticlePostDateTime = dateTime, CommentLikes = commentLikes, CommentResponses = commentResponses, CommentResponseLikes=commentResponseLikes };
                 return View(vm);
             }
