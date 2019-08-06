@@ -22,11 +22,11 @@
             }
             if (present == true)
             {
-                <i class="fas fa-user-plus fa-2x liked">Follow</i>
+                <i class="fas fa-user-plus fa-2x icon liked">Follow</i>
             }
             else
             {
-                <i  class="fas fa-user-plus fa-2x">Follow</i>
+                <i  class="fas fa-user-plus fa-2x icon">Follow</i>
             }
         }
        <span class="follow-counter badge badge-pill badge-info" id="follows-count">@Model.Follows.Count()</span>
@@ -51,12 +51,12 @@
                         console.log("SUCCESS!");
                         console.log(response);
                         if (response.id != 0) {
-                            $(".fas fa-user-plus fa-2x").add('liked')
+                            $(".icon").add('liked')
                             var num = +$("#follows-count").text() + 1
                             $("#follows-count").text(num)
                         }
                         else {
-                            $(".fas fa-user-plus fa-2x").remove('liked')
+                            $(".icon").remove('liked')
                             var num = $("#follows-count").text() - 1
                             $("#follows-count").text(num)
                         }
