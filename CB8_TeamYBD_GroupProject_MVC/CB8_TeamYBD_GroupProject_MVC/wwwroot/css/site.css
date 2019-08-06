@@ -107,7 +107,6 @@ html {
 
 .card {
     width: 370px;
-    ;
     color: black;
     height: calc(100vh - 94px - 60px);
     overflow: hidden;
