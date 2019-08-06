@@ -44,6 +44,16 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             return View(vm);
 
         }
-
+        public IActionResult Favorites()
+        {
+            List<CB8_TeamYBD_GroupProject_MVCUser> favorites = new List<CB8_TeamYBD_GroupProject_MVCUser>();
+            if (User.Identity.IsAuthenticated)
+            {
+                string userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                CB8_TeamYBD_GroupProject_MVCUser user = _context.Users.Find(userid);
+                favorites = _context.Follows.Where(x => x.Follower == user).Select(x => x.User).ToList();
+            }
+            return View(favorites);
+        }
     }
 }

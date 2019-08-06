@@ -1,0 +1,22 @@
+﻿@model List<CB8_TeamYBD_GroupProject_MVC.Areas.Identity.Data.CB8_TeamYBD_GroupProject_MVCUser>
+@{
+    ViewData["Title"] = "Favorites";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Favorites</h1>
+
+<div class="home-container">
+    @foreach (var i in Model)
+    {
+
+        <a href="/Users/Details/@i.Id" id="card-links">
+            <div id="author-cards" class="card text-white bg-info  mb-3">
+                <div class="card-header card-author"><img id="image-author" src="~/css/no-profile-image.png" /></div>
+                <div class="card-body card-body-author">
+                    <h5 class="card-title">@i.UserName</h5>
+                </div>
+            </div>
+        </a>
+    }
+</div>
