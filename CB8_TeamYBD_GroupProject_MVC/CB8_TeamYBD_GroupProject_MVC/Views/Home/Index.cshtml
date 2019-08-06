@@ -10,7 +10,7 @@
 <div class="home-container">  
 @foreach (var i in Model)
 {
-    var a = string.Concat(i.Content.Trim().Take(500).ToArray());
+    var a = string.Concat(i.Content.Trim().Take(300).ToArray());
     <a href="/home/read/@i.Id" id="card-links">
         <div id="home-cards" class="card text-white bg-info  mb-3">
         <div class="card-header article-info">
