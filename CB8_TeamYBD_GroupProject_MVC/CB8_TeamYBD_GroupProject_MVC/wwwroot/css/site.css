@@ -377,3 +377,13 @@ main {
 .card-body-author{
     background-color:grey;
 }
+
+.article-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.fa-lock{
+    color: gold !important;
+}
