@@ -28,7 +28,7 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             var article = _context.Articles.Find(Id);
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = _context.Users.Find(userId);
-            var like = await _context.ArticleLikes.Where(x => x.User == user).ToListAsync();
+            var like = await _context.ArticleLikes.Where(x => x.User == user && x.Article==article).ToListAsync();
             return like.Count()>0;
         }
 

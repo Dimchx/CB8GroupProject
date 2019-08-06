@@ -24,9 +24,13 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
 
         // GET: api/Follows
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Follow>>> GetFollow()
+        public async Task<ActionResult<bool>> GetFollow(string id)
         {
-            return await _context.Follows.ToListAsync();
+            var user = _context.Users.Find(id);
+            var followerid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var follower = _context.Users.Find(followerid);
+            var follows = await _context.Follows.Where(x => x.Follower == user && x.User == user).ToListAsync();
+            return follows.Count() > 0;
         }
 
         // GET: api/Follows/5
