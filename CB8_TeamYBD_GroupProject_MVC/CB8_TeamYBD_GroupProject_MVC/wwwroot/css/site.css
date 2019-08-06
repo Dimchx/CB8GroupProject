@@ -390,3 +390,35 @@ main {
 #file:hover {
     color: #61dafb !important;
 }
+
+.detail-img {
+    vertical-align: middle;
+    border-style: none;
+    width: 300px;
+    align-self: center;
+    display: flex;
+    margin-top: 50px;
+}
+
+.detail-name {
+    justify-content: center;
+    display: flex;
+}
+
+.detail-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.fa-user-plus{
+    display: flex;
+    justify-content: center;
+}
+
+.follow-button {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    height: auto;
+    align-self: center;
+}
