@@ -20,12 +20,12 @@ namespace CB8_TeamYBD_GroupProject_MVC.Controllers
             var model = _context.Users.ToList();
             return View(model);
         }
-        public IActionResult Details(string userid)
+        public IActionResult Details(string id)
         {
-            var user = _context.Users.Find(userid);
-            var articles = _context.Articles.Where(x => x.Author == user).ToList();
-            var listings = _context.SubscriptionListings.Where(x => x.User == user).ToList();
-            var vm = new UserViewModel() { User = user, Articles = articles, Listings = listings };
+            var user = _context.Users.Find(id);
+            List<Article> articles = _context.Articles.Where(x => x.Author == user).ToList();
+            List<SubscriptionListing> listings = _context.SubscriptionListings.Where(x => x.User == user).ToList();
+            UserViewModel vm = new UserViewModel() { User = user, Articles = articles, Listings = listings };
             return View(vm);
 
         }
