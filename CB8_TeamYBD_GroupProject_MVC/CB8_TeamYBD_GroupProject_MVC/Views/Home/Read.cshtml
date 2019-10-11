@@ -1,0 +1,333 @@
+﻿@model CB8_TeamYBD_GroupProject_MVC.ViewModels.ReadViewModel
+@using CB8_TeamYBD_GroupProject_MVC.Areas.Identity
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "See Article";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://kit.fontawesome.com/e827195700.js"></script>
+
+<div class="card text-white bg-info mb-3" id="card-content">
+    <div class="card-header" id="article-header">
+        <div>
+            <h1 style="color:#FFF;">@Model.Article.Title</h1>
+            <time>@Model.ArticlePostDateTime</time>
+        </div>
+        <div>
+        <a href="/Users/Details/@Model.Author.Id"><p id="information-author">@Model.Article.Author.UserName</p></a>
+        </div>
+    </div>
+
+    <div id="article-content" class="card-body">
+        <p class="card-text">@Html.Raw(@Model.Article.Content)</p>
+    </div>
+    <div>
+        @{
+            bool present = false;
+            foreach (var i in Model.Likes)
+            {
+                if (i.User.Id == Model.UserId)
+                {
+                    present = true;
+                }
+            }
+            if (present == true)
+            {
+                <i data-articleId="@Model.Article.Id" class="far fa-smile-wink fa-2x liked"></i>
+            }
+            else
+            {
+                <i data-articleId="@Model.Article.Id" class="far fa-smile-wink fa-2x"></i>
+            }
+        }
+        <span class="badge badge-pill badge-info" id="likes-count">@Model.Likes.Count()</span>
+        <i class="far fa-share-square fa-2x"></i>
+    </div>
+</div>
+<div id="comments">
+    @foreach (var i in Model.Comments)
+    {
+        <div class="comment-@i.Id">
+            <div>
+                <div>
+                    <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+                    @i.User.UserName
+                </div>
+                <div>
+                    @i.CommentDateTime
+                </div>
+                <div>
+                    <textarea class="submitcomment form-control" rows="3" readonly>@i.Content</textarea>
+                </div>
+                <div id="multiple-buttons-comments">
+                    <button data-commentId="@i.Id" type="button" class="comment-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="@i.Id">@Model.CommentLikes.Where(x => x.Comment.Id == i.Id).Count()</span></button>
+                    @if (i.User.Id == Model.UserId)
+                    {
+                        <button type="button" class="btn btn-outline-warning button-cmnt btn-sm edit-comment">Edit</button>
+                        <button data-commentId="@i.Id" type="button" class="btn btn-outline-danger button-cmnt btn-sm delete-comment">Delete</button>
+                    }
+                </div>
+            </div>
+
+            @foreach (var j in Model.CommentResponses)
+            {
+                if (j.Comment == i)
+                {
+                    <div class="reply-@j.Id">
+                        <div>
+                            <img id="img-reply" src="~/css/no-profile-image.png" alt="img profile" />
+                            @j.User.UserName
+                        </div>
+                        <div id="date-reply">
+                            @j.ResponseDateTime
+                        </div>
+                        <div>
+                            <textarea class="form-control" id='reply-textarea' rows="2" readonly>@j.Content</textarea>
+                        </div>
+                        <div id="multiple-buttons-reply">
+                            <button data-replyId="@j.Id" type="button" class="comment-reply-like btn btn-outline-info button-cmnt btn-sm">Like<span class="liketolike badge badge-pill badge-info" id="replyid-@j.Id">@Model.CommentResponseLikes.Where(x=>x.Response==j).Count() </span></button> 
+                            <button type="button" class="btn btn-outline-secondary button-cmnt btn-sm reply-comment">Reply</button>
+                            @if (j.User.Id == Model.UserId)
+                            {
+                                <button type="button" class="btn btn-outline-warning button-cmnt btn-sm">Edit</button>
+                                <button data-replyId="@j.Id" type="button" class="btn btn-outline-danger button-cmnt btn-sm delete-reply">Delete</button>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+        <div class="replydiv-@i.Id">
+            <textarea class='form-control replytext-@i.Id' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea>
+            <button data-commentId="@i.Id" type="button" class="btn btn-outline-primary btn-sm reply" id="submit-reply">Submit Reply</button>
+        </div>
+
+    }
+</div>
+<div class="form-group">
+    <div>
+        <label for="comment-textarea">Comment</label>
+    </div>
+    <div>
+        <img id="img-comment" src="~/css/no-profile-image.png" alt="img profile" />
+        @User.Identity.Name
+    </div>
+    <div>
+        <textarea class="form-control" id="comment-textarea" rows="3" placeholder="write a comment..." ></textarea>
+    </div>
+    <div>
+        <button data-articleId="@Model.Article.Id" id="submit-comment" type="button" class="btn btn-outline-primary btn-sm comment-submit">Submit</button>
+    </div>
+
+</div>
+
+@section scripts {
+    <script>
+        function iLike() {
+            return $(".comment-like").on("click", function (e) {
+                const id = $(e.currentTarget).attr("data-commentId");
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/CommentLikes/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        commentId: $(e.currentTarget).attr("data-commentId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            e.target.classList.add('liked')
+                            var num = +$("#" + id).text() + 1
+                            $("#" + id).text(num)
+                        }
+                        else {
+                            e.target.classList.remove('liked')
+                            var num = $("#" + id).text() - 1
+                            $("#" + id).text(num)
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });
+        }
+
+        function iLikeReply() {
+            return $(".comment-reply-like").on("click", function (e) {
+                const id = $(e.currentTarget).attr("data-replyId");
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/CommentResponseLikes/',
+                    async: true,
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        commentresponseId: $(e.currentTarget).attr("data-replyId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            e.target.classList.add('liked')
+                            var num = +$("#replyid-" + id).text() + 1
+                            $("#replyid-" + id).text(num)
+                        }
+                        else {
+                            e.target.classList.remove('liked')
+                            var num = $("#replyid-" + id).text() - 1
+                            $("#replyid-" + id).text(num)
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });
+        }
+
+        function iDelete() {
+            return $(".delete-comment").on("click", function (e) {
+                 const comment = $(e.currentTarget).attr("data-commentId");             
+                    $.ajax({
+                        method: 'DELETE',
+                        url: '/api/Comments/' + comment,
+                        success: function (response) {
+                            console.log(response.id)
+                            console.log(response.content);
+                            $(".comment-" + comment).remove();
+                            $(".replydiv-" + comment).remove();
+                        },
+                        error: function (response) {
+                            console.log("ERROR!!!!!!!!!!");
+                            console.log(response);
+                        }
+                    });
+            });
+        }  
+        function iDeleteReply() {
+            return $(".delete-reply").on("click", function (e) {
+                 const reply = $(e.currentTarget).attr("data-replyId");             
+                    $.ajax({
+                        method: 'DELETE',
+                        url: '/api/CommentResponses/' + reply,
+                        success: function (response) {
+                            $(".reply-" + reply).remove();
+                        },
+                        error: function (response) {
+                            console.log("ERROR!!!!!!!!!!");
+                            console.log(response);
+                        }
+                    });
+            });
+        }  
+
+        function iReply() {
+           return $(".reply").on("click", function (e) {
+                const comment = $(e.currentTarget).attr("data-commentId")
+                if ($(".replytext-"+comment).val() != "") {
+                    $.ajax({
+                        method: 'POST',
+                        url: '/api/CommentResponses/',
+                        contentType: "application/json; charset=utf-8",
+                        accepts: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            commentId: $(e.currentTarget).attr("data-commentId"),
+                            content: $(".replytext-"+comment).val()
+                        }),
+                        success: function (response) {
+                            console.log(response.id)
+                            console.log(response.content);
+                             $(".comment-"+comment).append("<div class='reply-"+response.id+"'><img id='img-reply' src='/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div id='date-reply'>" + response.responseDateTime + "</div><textarea class='submitcomment form-control' id='reply-textarea' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-reply'> <button data-replyId=" + response.id + " type='button' class='comment-reply-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id='replyid-" + response.id + "'>0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm edit-comment'>Edit</button><button type='button' data-replyId='"+response.id+"' class='btn btn-outline-danger button-cmnt btn-sm delete-comment delete-reply'>Delete</button></div><div>");
+                            iDeleteReply();
+                            iLikeReply();
+                            $(".replytext-" + comment).val('');
+                        },
+                        error: function (response) {
+                            console.log("ERROR!!!!!!!!!!");
+                            console.log(response);
+                        }
+                    });
+                };
+            });
+        }
+        $(document).ready(function () {
+            iLike();
+            iDelete(); 
+            iReply();
+            iDeleteReply();
+            iLikeReply();
+            $(".comment-submit").on("click", function (e) {
+                if ($("#comment-textarea").val() != "") {
+                    $.ajax({
+                        method: 'POST',
+                        url: '/api/Comments/',
+                        contentType: "application/json; charset=utf-8",
+                        accepts: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            articleId: $(e.currentTarget).attr("data-articleId"),
+                            content: $("#comment-textarea").val()
+                        }),
+                        success: function (response) {
+                            console.log(response.id)
+                            console.log(response.content);
+                            $("#comments").append("<div class='comment-"+response.id+"'><img id='img-comment' src='/css/no-profile-image.png' alt='img profile'/>" + response.user.userName + "<div>" + response.commentDateTime + "</div><textarea class='submitcomment form-control' readonly rows='3'>" + response.content + "</textarea><div id='multiple-buttons-comments'> <button data-commentId=" + response.id + " type='button' class='comment-like btn btn-outline-info button-cmnt btn-sm'>Like<span class='liketolike badge badge-pill badge-info' id=" + response.id + ">0</span></button><button type='button' class='btn btn-outline-warning button-cmnt btn-sm reply-comment'>Edit</button><button data-commentId=" + response.id + " type='button' class='btn btn-outline-danger button-cmnt btn-sm delete-comment'>Delete</button></div><div><div class'replydiv-'"+response.id+"'><textarea class='form-control reply-"+response.id+"' id='reply-textarea' rows='2' placeholder='write a reply...'></textarea><button data-commentId='"+response.id+"' type='button' class='btn btn-outline-primary btn-sm reply' id='submit-reply'>Submit Reply</button></div>");
+                            $("#comment-textarea").val('');
+                            iLike();
+                            iDelete();
+                            iReply();
+                            iDeleteReply();
+                            iLikeReply();
+                        },
+                        error: function (response) {
+                            console.log("ERROR!!!!!!!!!!");
+                            console.log(response);
+                        }
+                    });
+                };
+            });
+            $(".fa-smile-wink").on("click", function (e) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/ArticleLikes/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        articleId: $(e.currentTarget).attr("data-articleId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            e.target.classList.add('liked')
+                            var num = +$("#likes-count").text() + 1
+                            $("#likes-count").text(num)
+                        }
+                        else {
+                            e.target.classList.remove('liked')
+                            var num = $("#likes-count").text() - 1
+                            $("#likes-count").text(num)
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });           
+        });
+    </script>
+}
+

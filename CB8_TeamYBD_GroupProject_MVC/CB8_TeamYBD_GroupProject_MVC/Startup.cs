@@ -10,9 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CB8_TeamYBD_GroupProject_MVC.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CB8_TeamYBD_GroupProject_MVC.Models;
+using Stripe;
 
 namespace CB8_TeamYBD_GroupProject_MVC
 {
@@ -35,12 +36,22 @@ namespace CB8_TeamYBD_GroupProject_MVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 0;
+            });
+
+            services.AddCors();
+
+            services.AddDbContext<CB8_TeamYBD_GroupProject_MVCContext>(options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("CB8_TeamYBD_GroupProject_MVCContextConnection")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -59,7 +70,7 @@ namespace CB8_TeamYBD_GroupProject_MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            StripeConfiguration.ApiKey = "sk_test_KfaWfNI6iOonYbpPzkffnx3j00qBzevKth";
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

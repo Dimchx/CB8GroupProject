@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CB8_TeamYBD_GroupProject_MVC.Models.Article>
+@section Header{
+    <script src="https://cdn.tiny.cloud/1/2hy9ntax6atg1t8vcrqb9gj9pb4gkp2sb6coc7kkhfc6js6u/tinymce/5/tinymce.min.js"></script>
+    <script>tinymce.init({ selector: 'textarea', menubar: false, toolbar: false, readonly: 1 });</script>
+    <style>
+
+        .tox-tinymce {
+            min-height: 150px;
+            max-height: 150px;
+        }
+    </style>
+}
+@{
+    ViewData["Title"] = "Content";
+}
+
+<h1>my Content</h1>
+
+<p>
+    <a asp-action="Create">
+        <button type="submit" class="btn btn-outline-secondary btn-sm">
+            Create New!
+        </button>
+    </a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paid)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    <textarea id="preview">
+                    @Html.DisplayFor(modelItem => item.Content)
+                    </textarea>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paid)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">Edit</button>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">Details</button>
+                    </a>
+
+                    <a asp-action="Delete" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">Delete</button>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

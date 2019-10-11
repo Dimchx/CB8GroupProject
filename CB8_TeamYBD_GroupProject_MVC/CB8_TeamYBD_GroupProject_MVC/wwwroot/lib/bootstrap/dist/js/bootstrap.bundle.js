@@ -132,7 +132,7 @@
     getUID: function getUID(prefix) {
       do {
         // eslint-disable-next-line no-bitwise
-        prefix += ~~(Math.random() * MAX_UID); // "~~" acts like a faster Math.floor() here
+        prefix += ~~(Math.random() * MAX_UID); // "~~" acts Like a faster Math.floor() here
       } while (document.getElementById(prefix));
 
       return prefix;
@@ -1917,7 +1917,7 @@
    * @method
    * @memberof Popper.Utils
    * @argument {Object} offsets
-   * @returns {Object} ClientRect like output
+   * @returns {Object} ClientRect Like output
    */
   function getClientRect(offsets) {
     return _extends({}, offsets, {
@@ -3057,7 +3057,7 @@
     }
 
     if (data.flipped && data.placement === data.originalPlacement) {
-      // seems like flip is trying to loop, probably there's not enough space on any of the flippable sides
+      // seems Like flip is trying to loop, probably there's not enough space on any of the flippable sides
       return data;
     }
 
@@ -3348,7 +3348,7 @@
 
     // If offsetParent is the reference element, we really want to
     // go one step up and use the next offsetParent as reference to
-    // avoid to make this modifier completely useless and look like broken
+    // avoid to make this modifier completely useless and look Like broken
     if (data.instance.reference === boundariesElement) {
       boundariesElement = getOffsetParent(boundariesElement);
     }
@@ -4003,7 +4003,7 @@
     }
 
     // We can't use class properties because they don't get listed in the
-    // class prototype and break stuff like Sinon stubs
+    // class prototype and break stuff Like Sinon stubs
 
 
     createClass(Popper, [{

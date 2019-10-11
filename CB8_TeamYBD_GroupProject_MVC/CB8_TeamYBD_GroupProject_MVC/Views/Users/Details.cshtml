@@ -1,0 +1,117 @@
+﻿@model CB8_TeamYBD_GroupProject_MVC.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div class="detail-content">
+    <img class="detail-img" src="~/css/no-profile-image.png" />
+    <h3 class="detail-name">@Model.User.UserName</h3>
+    <button data-userId="@Model.User.Id" type="button" class="btn btn-outline-secondary btn-sm follow-button">
+
+        @{
+            bool present = false;
+            foreach (var i in Model.Follows)
+            {
+                if (i.Follower.Id == Model.UserId)
+                {
+                    present = true;
+                }
+            }
+            if (present == true)
+            {
+                <i class="fas fa-user-plus fa-2x icon liked">Follow</i>
+            }
+            else
+            {
+                <i  class="fas fa-user-plus fa-2x icon">Follow</i>
+            }
+        }
+       <span class="follow-counter badge badge-pill badge-info" id="follows-count">@Model.Follows.Count()</span>
+    </button>
+</div>
+
+<h2 style=" margin-top:10px; margin-bottom: 10px;">Articles</h2>
+
+<div class="home-container">
+    
+
+    @foreach (var i in Model.Articles)
+    {
+        var a = string.Concat(i.Content.Trim().Take(300).ToArray());
+        <a href="/home/read/@i.Id" id="card-links">
+            <div id="author-articles" class="card text-white bg-info  mb-3">
+                <div class="card-header article-info">
+                    @i.Title
+                    @if (i.Paid == true)
+                    {
+                        <i class="fas fa-lock"></i>
+                    }
+                </div>
+                <div class="card-body">
+                    <p id="text-cards-home">@Html.Raw(a) (...)</p>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+<h2>Listings</h2>
+
+<div class="home-container">
+    @foreach (var i in Model.Listings)
+    {
+        <a href="#" id="card-links">
+            <div id="author-articles" class="card text-white bg-info  mb-3 listing-promo">
+                <div class="card-header article-info">
+                    @i.Title
+                </div>
+                <div class="card-body">
+                    <p>&euro; @i.Price <br /> <span style="font-size:medium;">for</span><br /> @i.MonthDuration <span style="font-size: medium;">months</span> @i.DayDuration <span style="font-size:medium;">days</span></p>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".follow-button").on("click", function (e) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/Follows/',
+                    contentType: "application/json; charset=utf-8",
+                    accepts: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        userId: $(e.currentTarget).attr("data-userId")
+                    }),
+                    success: function (response) {
+                        console.log("SUCCESS!");
+                        console.log(response);
+                        if (response.id != 0) {
+                            $(".icon").add('liked')
+                            var num = +$("#follows-count").text() + 1
+                            $("#follows-count").text(num)
+                        }
+                        else {
+                            $(".icon").remove('liked')
+                            var num = $("#follows-count").text() - 1
+                            $("#follows-count").text(num)
+                        }
+                    },
+                    error: function (response) {
+                        console.log("ERROR!!!!!!!!!!");
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+}
